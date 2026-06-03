@@ -1,23 +1,56 @@
 dataset_id: masses_exclusions
-raw_path: masses_exclusions.csv
+raw_path: data/raw/masses_exclusions.csv
 schema:
+  observed_shape:
+    rows: 12280
+    columns: 4
   columns:
     mchi1:
       role: feature
-      units: TBD
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 0.222243
+        max: 1936.32
+        mean: 506.9
+        std: 369.587
     mchipm1:
       role: feature
-      units: TBD
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 92.0427
+        max: 1981.43
+        mean: 708.531
+        std: 466.948
     Final_CLs:
       role: audit_only
-      units: TBD
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 0.0
+        max: 1.0
+        mean: 0.608857
+        std: 0.398223
       note: "Do not use as feature or target unless explicitly approved."
     exclusion:
       role: target
+      observed_dtype: int64
       units: not_applicable
+      missing_values: 0
 target:
   column: exclusion
   type: binary
+  observed_unique_values:
+    - 0
+    - 1
+  observed_class_counts:
+    0: 2263
+    1: 10017
+  observed_class_ratio_min_to_max: 0.225916
   label_semantics: requires_review
 features:
   default:
@@ -25,6 +58,13 @@ features:
     - mchipm1
 audit_only_columns:
   - Final_CLs
+observed_data_quality:
+  duplicate_rows: 0
+  negative_masses_observed: false
+  mchipm1_greater_than_or_equal_mchi1_always: true
+  Final_CLs_exclusion_numeric_association:
+    pearson_correlation: 0.718138
+    note: "Observed numerical association only; no exclusion rule is inferred."
 preprocessing_rules:
   status: requires_review
 train_test_split_rule:

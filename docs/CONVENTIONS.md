@@ -2,7 +2,11 @@
 
 This file records current scientific and computational conventions for the repository. Codex-generated conventions and recommendations are provisional, unverified, and pending review until accepted by the thesis author.
 
-## Dataset Registration
+## Phase 3 Convention Registry
+
+This phase refines the convention registry using directly observed repository artifacts and reviewed project requirements. Unknowns must be marked `requires_review`, not guessed.
+
+## Dataset Registry Conventions
 
 Each dataset must declare:
 
@@ -27,11 +31,15 @@ Dataset-specific assumptions must live in dataset registry or configuration entr
 ### `masses_exclusions`
 
 - Dataset id: `masses_exclusions`
-- Raw file: `masses_exclusions.csv`
-- Known columns: `mchi1`, `mchipm1`, `Final_CLs`, `exclusion`
+- Raw path: `data/raw/masses_exclusions.csv`
+- Observed shape: 12280 rows, 4 columns
+- Observed columns: `mchi1`, `mchipm1`, `Final_CLs`, `exclusion`
 - Default features: `mchi1`, `mchipm1`
-- Target: binary exclusion
+- Target: binary `exclusion`
 - `Final_CLs`: audit-only unless explicitly approved as a feature or target
+- Missing values observed: none
+- Duplicate rows observed: 0
+- Observed class counts: `0` = 2263, `1` = 10017
 - Approval status: requires review
 - Open questions: units, label semantics details, preprocessing rules, train/test split rule, metric protocol details, class-imbalance strategy
 
@@ -53,13 +61,15 @@ Units must be declared per dataset and per relevant column when known. Unknown u
 
 ## ROC/AUC Rule
 
-ROC/AUC must be computed from continuous scores, not hard class labels. Thresholded labels may be reported separately, but they are not a valid source for ROC/AUC.
+ROC/AUC must be computed from continuous scores, never hard class labels. Thresholded labels may be used for accuracy and confusion matrix reporting only.
 
 AUC > 0.97 is an aspirational target for `masses_exclusions`, not a claim unless proven by an actual reviewed run.
 
 ## Class-Imbalance Handling
 
-Class imbalance must be handled explicitly and reproducibly. The strategy must be declared in the dataset config or run config and recorded in run metadata.
+Class imbalance must be handled explicitly and reproducibly. The strategy must be declared per run in the dataset config or run config and recorded in run metadata.
+
+Acceptable initial methods include sample weighting or model-native class weighting. Synthetic oversampling in physical mass space requires review before use.
 
 ## Random Seeds And Split Recording
 
