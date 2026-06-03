@@ -2,7 +2,7 @@
 
 ## Current Roadmap Phase
 
-Roadmap Phase 2 - Repo Governance Bootstrap.
+Roadmap Phase 4 - Thesis Topic Module Scaffold.
 
 ## Current Project Summary
 
@@ -13,6 +13,10 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 ## Registered Datasets
 
 - `masses_exclusions`: first registered dataset.
+
+## Active Modules
+
+- `pysr_bsm_exclusion`: PySR and standard ML surrogate modeling for binary BSM exclusion classification.
 
 ## Supervisor Priorities For `masses_exclusions`
 
@@ -28,11 +32,11 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Review and accept or revise the governance files.
-- Add or verify the raw dataset outside this governance task.
-- Define the first reviewed config for `masses_exclusions`.
-- Implement dataset audit tooling.
-- Implement config-driven training and evaluation scripts.
+- Review the `pysr_bsm_exclusion` module scaffold before implementing scripts.
+- Resolve open questions for units, label semantics, validation protocol, and baseline set.
+- Define the first reviewed run config for `masses_exclusions`.
+- Implement dataset audit tooling after scaffold review.
+- Implement config-driven training and evaluation scripts after scaffold review.
 
 ## Backlog
 
