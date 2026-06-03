@@ -1,0 +1,40 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated outputs and run logs
+outputs/
+runs/
+run_logs/
+logs/
+reports/generated/
+
+# Model artifacts
+*.pkl
+*.pickle
+*.joblib
+
+# Temporary PySR outputs
+hall_of_fame*.csv
+equations*.csv
+pysr_tmp/
+pysr_temp/
+*.bkup
+
+# Local system files
+.DS_Store

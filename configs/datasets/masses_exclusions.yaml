@@ -1,0 +1,46 @@
+dataset_id: masses_exclusions
+raw_path: masses_exclusions.csv
+schema:
+  columns:
+    mchi1:
+      role: feature
+      units: TBD
+    mchipm1:
+      role: feature
+      units: TBD
+    Final_CLs:
+      role: audit_only
+      units: TBD
+      note: "Do not use as feature or target unless explicitly approved."
+    exclusion:
+      role: target
+      units: not_applicable
+target:
+  column: exclusion
+  type: binary
+  label_semantics: requires_review
+features:
+  default:
+    - mchi1
+    - mchipm1
+audit_only_columns:
+  - Final_CLs
+preprocessing_rules:
+  status: requires_review
+train_test_split_rule:
+  status: requires_review
+metric_protocol:
+  status: requires_review
+  roc_auc:
+    score_source: continuous_scores_required
+    hard_labels_allowed: false
+class_imbalance_strategy:
+  status: requires_review
+approval_status: requires_review
+open_questions:
+  - Confirm units for mchi1 and mchipm1.
+  - Confirm binary label semantics for exclusion.
+  - Define preprocessing rules.
+  - Define train/test split rule and random seeds.
+  - Define metric protocol details.
+  - Define class-imbalance strategy.
