@@ -2,7 +2,7 @@
 
 ## Current Roadmap Phase
 
-Roadmap Phase 4 - Thesis Topic Module Scaffold.
+Roadmap Phase 5 - Codex Execution Protocol.
 
 ## Current Project Summary
 
@@ -18,6 +18,10 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 
 - `pysr_bsm_exclusion`: PySR and standard ML surrogate modeling for binary BSM exclusion classification.
 
+## Current Phase 5 Deliverable
+
+- `docs/CODEX_EXECUTION_PROTOCOL.md`: standard protocol for future Codex-CLI tasks in this repository.
+
 ## Supervisor Priorities For `masses_exclusions`
 
 - Perform ROC/AUC analysis of the selected PySR model.
@@ -32,7 +36,7 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Review the `pysr_bsm_exclusion` module scaffold before implementing scripts.
+- Review `docs/CODEX_EXECUTION_PROTOCOL.md` before allowing Codex to implement training/evaluation scripts.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.
 - Define the first reviewed run config for `masses_exclusions`.
 - Implement dataset audit tooling after scaffold review.
