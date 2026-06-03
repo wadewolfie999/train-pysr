@@ -2,7 +2,7 @@
 
 ## Current Roadmap Phase
 
-Roadmap Phase 5 - Codex Execution Protocol.
+Roadmap Phase 6 - Review and Approval Loop.
 
 ## Current Project Summary
 
@@ -18,9 +18,9 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 
 - `pysr_bsm_exclusion`: PySR and standard ML surrogate modeling for binary BSM exclusion classification.
 
-## Current Phase 5 Deliverable
+## Current Phase 6 Deliverable
 
-- `docs/CODEX_EXECUTION_PROTOCOL.md`: standard protocol for future Codex-CLI tasks in this repository.
+- `docs/REVIEW_AND_APPROVAL.md`: protocol for accepting or rejecting Codex-generated outputs.
 
 ## Supervisor Priorities For `masses_exclusions`
 
@@ -36,7 +36,7 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Review `docs/CODEX_EXECUTION_PROTOCOL.md` before allowing Codex to implement training/evaluation scripts.
+- Review `docs/REVIEW_AND_APPROVAL.md` before allowing model-training or evaluation scripts to become accepted.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.
 - Define the first reviewed run config for `masses_exclusions`.
 - Implement dataset audit tooling after scaffold review.
