@@ -2,7 +2,7 @@
 
 ## Current Roadmap Phase
 
-Roadmap Phase 6 - Review and Approval Loop.
+Roadmap Phase 7 - Reproducible Research Layer.
 
 ## Current Project Summary
 
@@ -18,9 +18,9 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 
 - `pysr_bsm_exclusion`: PySR and standard ML surrogate modeling for binary BSM exclusion classification.
 
-## Current Phase 6 Deliverable
+## Current Phase 7 Deliverable
 
-- `docs/REVIEW_AND_APPROVAL.md`: protocol for accepting or rejecting Codex-generated outputs.
+- Dataset audit script and run config.
 
 ## Supervisor Priorities For `masses_exclusions`
 
@@ -36,7 +36,7 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Review `docs/REVIEW_AND_APPROVAL.md` before allowing model-training or evaluation scripts to become accepted.
+- Review, commit, then run the dataset audit.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.
 - Define the first reviewed run config for `masses_exclusions`.
 - Implement dataset audit tooling after scaffold review.

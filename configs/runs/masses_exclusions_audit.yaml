@@ -1,0 +1,14 @@
+run_id: masses_exclusions_audit
+dataset_id: masses_exclusions
+dataset_config_path: configs/datasets/masses_exclusions.yaml
+raw_data_path: data/raw/masses_exclusions.csv
+task_type: dataset_audit
+feature_columns:
+  - mchi1
+  - mchipm1
+target_column: exclusion
+audit_only_columns:
+  - Final_CLs
+random_seed: not_applicable
+output_directory: outputs/runs/masses_exclusions_audit/
+review_status: draft

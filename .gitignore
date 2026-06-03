@@ -18,10 +18,12 @@ ENV/
 .ipynb_checkpoints/
 
 # Generated outputs and run logs
-outputs/
-runs/
-run_logs/
-logs/
+outputs/*
+!outputs/README.md
+/runs/
+/run_logs/
+logs/*
+!logs/README.md
 reports/generated/
 
 # Model artifacts

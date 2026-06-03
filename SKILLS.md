@@ -2,15 +2,25 @@
 
 These workflows are concise operational recipes for this repository. Untested workflows are provisional, unverified, and pending review.
 
-## `audit_dataset(dataset_id)`
+## `audit_dataset(dataset_id, run_config)`
 
 Status: provisional, unverified, pending review.
 
-- Load the dataset registry entry for `dataset_id`.
-- Verify the raw path exists without modifying it.
+- Load the run config for `run_config`.
+- Confirm the run config dataset id matches `dataset_id`.
+- Load the dataset registry entry referenced by the run config.
+- Verify the raw path exists without modifying raw data.
 - Check declared columns against the raw dataset schema.
 - Confirm feature columns, target column, audit-only columns, units, label semantics, preprocessing rules, split rule, metric protocol, class-imbalance strategy, approval status, and open questions.
 - Write findings to a new generated audit output without overwriting prior outputs.
+
+Current initial command:
+
+```bash
+python scripts/audit_dataset.py --config configs/runs/masses_exclusions_audit.yaml
+```
+
+This workflow remains provisional until executed and reviewed.
 
 ## `train_pysr(dataset_id, config_id)`
 
