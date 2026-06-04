@@ -1,0 +1,56 @@
+run_id: masses_exclusions_auc97_candidate
+dataset_id: masses_exclusions
+dataset_config: configs/datasets/masses_exclusions.yaml
+raw_path: data/raw/masses_exclusions.csv
+task_type: auc97_candidate_reproduction
+target: exclusion
+positive_label: requires_review
+auc_rule: continuous_scores_only
+review_status: draft
+output_dir: outputs/runs/masses_exclusions_auc97_candidate/
+feature_set:
+  name: mass_engineered_v1
+  base_columns:
+    - mchi1
+    - mchipm1
+  derived_features:
+    - delta_m = mchipm1 - mchi1
+    - sum_m = mchipm1 + mchi1
+    - ratio_m = mchipm1 / mchi1
+    - log_mchi1 = log1p(mchi1)
+    - log_mchipm1 = log1p(mchipm1)
+    - log_delta_m = log1p(max(delta_m, 0))
+model:
+  family: histogram_gradient_boosting
+  sklearn_class: HistGradientBoostingClassifier
+  variant: hist_gradient_boosting_grid_01
+  hyperparameters:
+    learning_rate: 0.03
+    max_iter: 300
+    max_leaf_nodes: 31
+    l2_regularization: 0.0
+candidate_split:
+  split_method: stratified
+  test_size: 0.2
+  random_seed: 42
+robustness:
+  repeated_splits:
+    seeds:
+      - 11
+      - 22
+      - 33
+      - 42
+      - 55
+      - 66
+      - 77
+      - 88
+      - 99
+      - 123
+    test_size: 0.2
+    split_method: stratified
+  cross_validation:
+    n_splits: 5
+    shuffle: true
+    random_seed: 42
+metrics:
+  - roc_auc
