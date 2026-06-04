@@ -51,6 +51,54 @@ Status: provisional, unverified, pending review.
 - Record class-imbalance handling and random seeds.
 - Compare metrics without changing the registered target or feature set.
 
+## `evaluate_ml_baselines(dataset_id, run_config)`
+
+Status: provisional, unverified, pending review.
+
+- Load `run_config` and confirm it references `dataset_id`.
+- Use only configured features and target.
+- Compute ROC/AUC from continuous scores only.
+- Record dataset id, config path, raw path, split rule, seed, feature set, target, class-imbalance handling, command, output path, and review status.
+- Write metrics and ROC curve data to the configured run output directory without overwriting prior outputs.
+
+Current initial command:
+
+```bash
+python scripts/evaluate_binary_classifiers.py --config configs/runs/masses_exclusions_eval.yaml
+```
+
+## `prepare_pysr_auc_search(dataset_id, run_config)`
+
+Status: provisional, unverified, pending review.
+
+- Review `run_config` for dataset id, feature set, target, split rule, seed, objective, PySR options, and output path.
+- Confirm `Final_CLs` is not used as a feature.
+- Use `--dry-run` before launching PySR training.
+
+Current dry-run command:
+
+```bash
+python scripts/train_pysr_auc_search.py --config configs/runs/masses_exclusions_pysr_search.yaml --dry-run
+```
+
+## `run_pysr_auc_search(dataset_id, run_config)`
+
+Status: provisional, unverified, pending review.
+
+- Run only after review of the PySR config and search budget.
+- Use balanced sample weights and the configured stratified split.
+- Save equations, metrics, ROC curve data, metadata, and any model artifact only under the configured output directory.
+- Treat any observed AUC as a run result pending review, not an accepted thesis result.
+
+## `review_auc_results(run_id)`
+
+Status: provisional, unverified, pending review.
+
+- Confirm ROC/AUC was computed from continuous scores, not hard labels.
+- Check dataset id, feature set, target, split rule, random seed, class-imbalance handling, metric implementation, output path, and code version.
+- Verify whether any AUC > 0.97 statement is written only as observed in the run and pending review.
+- Accept, reject, or supersede results only after thesis-author review.
+
 ## `log_run(run_id)`
 
 Status: provisional, unverified, pending review.

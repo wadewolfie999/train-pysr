@@ -20,7 +20,7 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 
 ## Current Phase 7 Deliverable
 
-- Dataset audit script and run config.
+- Reproducible evaluation scripts toward AUC > 0.97, including ML baseline evaluation and PySR search configuration.
 
 ## Supervisor Priorities For `masses_exclusions`
 
@@ -36,7 +36,7 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Review, commit, then run the dataset audit.
+- Run ML baselines first, review metrics, then decide PySR search budget.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.
 - Define the first reviewed run config for `masses_exclusions`.
 - Implement dataset audit tooling after scaffold review.

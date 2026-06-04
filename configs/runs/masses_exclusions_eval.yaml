@@ -1,0 +1,27 @@
+run_id: masses_exclusions_eval_v1
+dataset_id: masses_exclusions
+dataset_config: configs/datasets/masses_exclusions.yaml
+raw_path: data/raw/masses_exclusions.csv
+task_type: binary_classification_eval
+features:
+  - mchi1
+  - mchipm1
+target: exclusion
+audit_only_columns:
+  - Final_CLs
+positive_label: requires_review
+test_size: 0.2
+split_method: stratified
+random_seed: 42
+metrics:
+  - roc_auc
+  - average_precision
+  - accuracy_at_threshold
+  - balanced_accuracy_at_threshold
+  - confusion_matrix_at_threshold
+auc_rule: continuous_scores_only
+imbalance_strategy:
+  - sample_weight_balanced
+  - model_native_class_weight_where_supported
+output_dir: outputs/runs/masses_exclusions_eval_v1/
+review_status: draft
