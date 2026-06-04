@@ -1,0 +1,56 @@
+run_id: masses_exclusions_robustness_v1
+dataset_id: masses_exclusions
+dataset_config: configs/datasets/masses_exclusions.yaml
+raw_path: data/raw/masses_exclusions.csv
+task_type: robust_binary_classification_eval
+target: exclusion
+positive_label: requires_review
+auc_rule: continuous_scores_only
+review_status: draft
+output_dir: outputs/runs/masses_exclusions_robustness_v1/
+approved_feature_sets:
+  - name: raw_masses
+    columns:
+      - mchi1
+      - mchipm1
+  - name: mass_engineered_v1
+    base_columns:
+      - mchi1
+      - mchipm1
+    derived_features:
+      - delta_m = mchipm1 - mchi1
+      - sum_m = mchipm1 + mchi1
+      - ratio_m = mchipm1 / mchi1
+      - log_mchi1 = log1p(mchi1)
+      - log_mchipm1 = log1p(mchipm1)
+      - log_delta_m = log1p(max(delta_m, 0))
+validation:
+  repeated_splits:
+    enabled: true
+    seeds:
+      - 11
+      - 22
+      - 33
+      - 42
+      - 55
+      - 66
+      - 77
+      - 88
+      - 99
+      - 123
+    test_size: 0.2
+    split_method: stratified
+  cross_validation:
+    enabled: true
+    n_splits: 5
+    shuffle: true
+    random_seed: 42
+models:
+  - hist_gradient_boosting_grid_01_or_best_equivalent
+  - knn_grid_04_or_best_equivalent
+  - extra_trees_best_small_grid
+metrics:
+  - roc_auc
+  - average_precision
+  - balanced_accuracy_at_threshold
+  - confusion_matrix_at_threshold

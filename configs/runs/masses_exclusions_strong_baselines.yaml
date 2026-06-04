@@ -1,0 +1,52 @@
+run_id: masses_exclusions_strong_baselines_v1
+dataset_id: masses_exclusions
+dataset_config: configs/datasets/masses_exclusions.yaml
+raw_path: data/raw/masses_exclusions.csv
+task_type: strong_binary_classification_eval
+target: exclusion
+positive_label: requires_review
+test_size: 0.2
+split_method: stratified
+random_seed: 42
+auc_rule: continuous_scores_only
+review_status: draft
+output_dir: outputs/runs/masses_exclusions_strong_baselines_v1/
+approved_feature_sets:
+  - name: raw_masses
+    columns:
+      - mchi1
+      - mchipm1
+  - name: mass_engineered_v1
+    base_columns:
+      - mchi1
+      - mchipm1
+    derived_features:
+      - delta_m = mchipm1 - mchi1
+      - sum_m = mchipm1 + mchi1
+      - ratio_m = mchipm1 / mchi1
+      - log_mchi1 = log1p(mchi1)
+      - log_mchipm1 = log1p(mchipm1)
+      - log_delta_m = log1p(max(delta_m, 0))
+diagnostic_feature_sets:
+  - name: final_cls_only_diagnostic
+    columns:
+      - Final_CLs
+    warning: diagnostic_only_possible_label_leakage_not_for_thesis_claims
+  - name: masses_plus_final_cls_diagnostic
+    columns:
+      - mchi1
+      - mchipm1
+      - Final_CLs
+    warning: diagnostic_only_possible_label_leakage_not_for_thesis_claims
+models:
+  - tuned_random_forest
+  - extra_trees
+  - hist_gradient_boosting_grid
+  - logistic_polynomial_degree_3
+  - rbf_svm_grid
+  - knn_grid
+metrics:
+  - roc_auc
+  - average_precision
+  - balanced_accuracy_at_threshold
+  - confusion_matrix_at_threshold

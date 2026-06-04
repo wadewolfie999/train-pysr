@@ -20,7 +20,7 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 
 ## Current Phase 7 Deliverable
 
-- Reproducible evaluation scripts toward AUC > 0.97, including ML baseline evaluation and PySR search configuration.
+- Robustness validation before PySR after strong baselines observed AUC > 0.97 using approved engineered mass features.
 
 ## Supervisor Priorities For `masses_exclusions`
 
@@ -36,7 +36,8 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
-- Run ML baselines first, review metrics, then decide PySR search budget.
+- Review robustness validation for approved engineered mass features.
+- Keep PySR search blocked until robustness review is complete.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.
 - Define the first reviewed run config for `masses_exclusions`.
 - Implement dataset audit tooling after scaffold review.
