@@ -75,6 +75,7 @@ def validate_config(config: dict[str, Any]) -> None:
             "candidate_split",
             "robustness",
             "metrics",
+            "class_imbalance_strategy",
         ],
     )
     if config["task_type"] != "auc97_candidate_reproduction":
@@ -85,6 +86,17 @@ def validate_config(config: dict[str, Any]) -> None:
         raise ValueError("This script only reproduces mass_engineered_v1.")
     if config["model"]["family"] != "histogram_gradient_boosting":
         raise ValueError("This script only reproduces histogram gradient boosting.")
+    imbalance = config["class_imbalance_strategy"]
+    expected_imbalance = {
+        "method": "compute_sample_weight",
+        "class_weight": "balanced",
+        "applied_to": "training_split_only",
+    }
+    if imbalance != expected_imbalance:
+        raise ValueError(
+            "class_imbalance_strategy must declare compute_sample_weight with "
+            "class_weight balanced applied to training_split_only."
+        )
 
 
 def prepare_output_dir(output_dir: Path) -> None:
@@ -210,11 +222,11 @@ def run_split(
         "feature_set": config["feature_set"]["name"],
         "model_family": config["model"]["family"],
         "model_variant": config["model"]["variant"],
-        "status": "completed",
+        "status": STATUS,
         "score_source": "predict_proba_positive_class",
         "roc_auc": auc,
         "note": (
-            "AUC >= 0.97 observed in this run; pending review."
+            f"AUC >= 0.97 observed in this run; {STATUS}."
             if auc >= TARGET_AUC
             else STATUS
         ),
@@ -442,6 +454,7 @@ def main() -> int:
             "variant": config["model"]["variant"],
             "hyperparameters": config["model"]["hyperparameters"],
         },
+        "class_imbalance_strategy": config["class_imbalance_strategy"],
         "candidate_split": config["candidate_split"],
         "robustness": config["robustness"],
         "notes": [

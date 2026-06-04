@@ -54,3 +54,7 @@ robustness:
     random_seed: 42
 metrics:
   - roc_auc
+class_imbalance_strategy:
+  method: compute_sample_weight
+  class_weight: balanced
+  applied_to: training_split_only
