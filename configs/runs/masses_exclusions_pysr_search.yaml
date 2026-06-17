@@ -12,15 +12,40 @@ test_size: 0.2
 split_method: stratified
 random_seed: 42
 auc_rule: continuous_scores_only
-objective: maximize_roc_auc
+objective: squared_error_symbolic_score_surrogate_with_roc_auc_evaluation
 expression_simplicity: not_initial_hard_constraint
 output_dir: outputs/runs/masses_exclusions_pysr_search_v1/
 review_status: draft
+run_policy:
+  require_clean_worktree: true
+  allow_overwrite: false
+  record_git_diff_status: true
+  no_full_search_without_explicit_approval: true
+runtime:
+  julia_num_threads: 1
+  python_juliacall_handle_signals: "yes"
+  omp_num_threads: 1
+  mkl_num_threads: 1
+  openblas_num_threads: 1
+  pythonunbuffered: true
+reference:
+  fixed_split_hist_gradient_boosting_auc: 0.9757422365348225
+  comparison_status: provisional_unverified_pending_review
 pysr_options:
   niterations: 100
   maxsize: 40
   populations: 20
+  population_size: 27
   parsimony: 0.0
+  timeout_in_seconds: 7200
+  parallelism: serial
+  precision: 32
+  deterministic: true
+  warm_start: false
+  temp_equation_file: false
+  delete_tempfiles: false
+  model_selection: best
+  elementwise_loss: "loss(prediction, target, weight) = weight * (prediction - target)^2"
   binary_operators:
     - "+"
     - "-"
@@ -28,6 +53,13 @@ pysr_options:
     - "/"
   unary_operators: []
 pysr_search_notes:
+  - weighted squared-error fitting on binary 0/1 targets is used as a symbolic continuous-score surrogate, not direct AUC optimization
+  - evaluate ROC-AUC from continuous PySR predictions only
+  - save per-row test labels and continuous scores for independent AUC recomputation
+  - save PySR run-local outputs, logs, equations, metadata, runtime settings, and environment records inside the run directory
+  - never use Final_CLs as a feature or target
+  - never overwrite existing run outputs
+  - require a clean Git worktree for the full search
   - allow larger maxsize than historical script
   - record operators
   - record parsimony

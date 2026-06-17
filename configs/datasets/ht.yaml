@@ -1,0 +1,120 @@
+dataset_id: ht
+raw_path: data/raw/Ht.csv
+relationship_to_existing_datasets:
+  related_to: none_declared
+  note: "Distinct likelihood/parameter-style dataset; do not force into the current binary-exclusion workflow without review."
+schema:
+  observed_shape:
+    rows: 25858
+    columns: 17
+  columns:
+    Prob:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    logLik:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    M_S:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    M_R:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    M_Y:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    laL:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    omega:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    invBr:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    lilithLogl:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    PsiCross:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    vctc:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    logM_S:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    logM_R:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    delMA:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    delMC:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    logvt:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+    Chi2:
+      role: unassigned_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+target:
+  column: null
+  status: not_assigned_requires_review
+  note: "No modeling target is assigned for intake."
+features:
+  approved: []
+  candidate_requires_review: []
+audit_only_columns: []
+observed_data_quality:
+  duplicate_rows: 0
+  missing_values_observed: false
+preprocessing_rules:
+  status: requires_review
+train_test_split_rule:
+  status: not_applicable_until_target_review
+metric_protocol:
+  status: not_applicable_until_target_review
+class_imbalance_strategy:
+  status: not_applicable_until_target_review
+approval_status: requires_review
+open_questions:
+  - Confirm the scientific meaning and units of each column.
+  - Confirm whether this dataset has a target variable, likelihood objective, or filtering rule.
+  - Confirm whether any columns are derived from or aliases of other columns.
+  - Define preprocessing and modeling task only after supervisor review.

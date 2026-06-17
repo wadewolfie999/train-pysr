@@ -1,0 +1,95 @@
+dataset_id: masses_exclusions2
+raw_path: data/raw/masses_exclusions2.csv
+relationship_to_existing_datasets:
+  related_to: masses_exclusions
+  note: "Same observed mass/exclusion schema with an additional mhiggs column; scientific relationship requires review."
+schema:
+  observed_shape:
+    rows: 12280
+    columns: 5
+  columns:
+    mhiggs:
+      role: candidate_feature_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 120.00049
+        max: 129.980544
+        mean: 124.493838
+        std: 2.54841
+    mchi1:
+      role: candidate_feature_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 0.222243
+        max: 1936.32098
+        mean: 506.899779
+        std: 369.586853
+    mchipm1:
+      role: candidate_feature_requires_review
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 92.042689
+        max: 1981.43446
+        mean: 708.530804
+        std: 466.948114
+    Final_CLs:
+      role: audit_only
+      observed_dtype: float64
+      units: requires_review
+      missing_values: 0
+      observed_summary:
+        min: 0.0
+        max: 1.0
+        mean: 0.608857
+        std: 0.398223
+      note: "Do not use as feature or target unless explicitly approved."
+    exclusion:
+      role: provisional_target_requires_review
+      observed_dtype: int64
+      units: not_applicable
+      missing_values: 0
+target:
+  column: exclusion
+  type: binary
+  status: provisional_requires_review
+  observed_unique_values:
+    - 0
+    - 1
+  observed_class_counts:
+    0: 2263
+    1: 10017
+  label_semantics: requires_review
+features:
+  approved: []
+  candidate_requires_review:
+    - mhiggs
+    - mchi1
+    - mchipm1
+audit_only_columns:
+  - Final_CLs
+observed_data_quality:
+  duplicate_rows: 0
+  missing_values_observed: false
+  negative_masses_observed: false
+  mchipm1_greater_than_or_equal_mchi1_always: true
+preprocessing_rules:
+  status: requires_review
+train_test_split_rule:
+  status: requires_review
+metric_protocol:
+  status: requires_review
+class_imbalance_strategy:
+  status: requires_review
+approval_status: requires_review
+open_questions:
+  - Confirm whether mhiggs is an allowed model feature.
+  - Confirm units for mhiggs, mchi1, and mchipm1.
+  - Confirm binary label semantics for exclusion.
+  - Confirm relationship between this file and masses_exclusions.csv.
+  - Define preprocessing, split, metric, and class-imbalance rules before modeling.
