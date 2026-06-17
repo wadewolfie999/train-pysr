@@ -1,4 +1,4 @@
-run_id: masses_exclusions_pysr_search_v1
+run_id: masses_exclusions_pysr_smoke_v4
 dataset_id: masses_exclusions
 dataset_config: configs/datasets/masses_exclusions.yaml
 raw_path: data/raw/masses_exclusions.csv
@@ -13,14 +13,14 @@ split_method: stratified
 random_seed: 42
 auc_rule: continuous_scores_only
 objective: squared_error_symbolic_score_surrogate_with_roc_auc_evaluation
-expression_simplicity: not_initial_hard_constraint
-output_dir: outputs/runs/masses_exclusions_pysr_search_v1/
+expression_simplicity: smoke_test_only
+output_dir: outputs/runs/masses_exclusions_pysr_smoke_v4/
 review_status: draft
 run_policy:
-  require_clean_worktree: true
+  require_clean_worktree: false
   allow_overwrite: false
   record_git_diff_status: true
-  no_full_search_without_explicit_approval: true
+  smoke_test: true
 runtime:
   julia_num_threads: 1
   python_juliacall_handle_signals: "yes"
@@ -32,12 +32,12 @@ reference:
   fixed_split_hist_gradient_boosting_auc: 0.9757422365348225
   comparison_status: provisional_unverified_pending_review
 pysr_options:
-  niterations: 100
-  maxsize: 40
-  populations: 20
-  population_size: 27
+  niterations: 1
+  maxsize: 8
+  populations: 2
+  population_size: 16
   parsimony: 0.0
-  timeout_in_seconds: 7200
+  timeout_in_seconds: 120
   parallelism: serial
   precision: 32
   deterministic: true
@@ -53,17 +53,10 @@ pysr_options:
     - "/"
   unary_operators: []
 pysr_search_notes:
+  - smoke test only; not a scientific performance run
   - weighted squared-error fitting on binary 0/1 targets is used as a symbolic continuous-score surrogate, not direct AUC optimization
   - evaluate ROC-AUC from continuous PySR predictions only
   - save per-row test labels and continuous scores for independent AUC recomputation
-  - save PySR run-local outputs, logs, equations, metadata, runtime settings, and environment records inside the run directory
   - never use Final_CLs as a feature or target
   - never overwrite existing run outputs
-  - require a clean Git worktree for the full search
-  - allow larger maxsize than historical script
-  - record operators
-  - record parsimony
-  - record niterations
-  - record populations
-  - record random seed
-  - save discovered expressions and validation scores
+  - record exact Git commit and dirty worktree status for review
