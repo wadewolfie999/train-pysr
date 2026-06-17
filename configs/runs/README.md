@@ -15,3 +15,6 @@ Each run config must declare:
 - review status.
 
 Run configs are provisional until executed, verified, and reviewed.
+
+For audit-only intake of a dataset with no reviewed target, `target_column` may
+be `null`. That does not assign a modeling target.

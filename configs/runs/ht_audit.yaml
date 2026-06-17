@@ -1,0 +1,15 @@
+run_id: ht_audit
+dataset_id: ht
+dataset_config_path: configs/datasets/ht.yaml
+raw_data_path: data/raw/Ht.csv
+task_type: dataset_audit
+feature_columns: []
+target_column: null
+audit_only_columns: []
+random_seed: not_applicable
+output_directory: outputs/runs/ht_audit/
+review_status: draft
+notes:
+  - "Audit-only intake; no model training."
+  - "No target or approved feature set is assigned."
+  - "Column roles are provisional and require review."

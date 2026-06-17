@@ -13,6 +13,8 @@ The workflow is intended to be dataset-agnostic. Dataset-specific assumptions be
 ## Registered Datasets
 
 - `masses_exclusions`: first registered dataset.
+- `masses_exclusions2`: audit-only intake; related mass/exclusion schema with added `mhiggs`; not approved for modeling.
+- `ht`: audit-only intake; distinct likelihood/parameter-style dataset; no assigned modeling target.
 
 ## Active Modules
 
@@ -36,6 +38,7 @@ All recommendations in this file are provisional, unverified, and pending review
 
 ## Immediate Next Steps
 
+- Review audit-only intake outputs for `masses_exclusions2` and `ht`.
 - Review robustness validation for approved engineered mass features.
 - Keep PySR search blocked until robustness review is complete.
 - Resolve open questions for units, label semantics, validation protocol, and baseline set.

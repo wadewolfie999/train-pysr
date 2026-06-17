@@ -4,8 +4,17 @@
 
 This repository supports a reproducible research workflow for PySR and standard
 machine-learning surrogate modeling for binary BSM exclusion classification.
-The active dataset id is `masses_exclusions`, with raw data stored at
+The active modeled dataset id is `masses_exclusions`, with raw data stored at
 `data/raw/masses_exclusions.csv`.
+
+Additional professor-provided raw datasets are currently in audit-only intake:
+
+- `masses_exclusions2`: related mass/exclusion schema with an added `mhiggs`
+  column.
+- `ht`: separate likelihood/parameter-style dataset with no assigned modeling
+  target.
+
+These intake datasets are not approved for modeling yet.
 
 The supervisor-facing report notebook is:
 
@@ -60,6 +69,9 @@ preprocessing rules, split rules, metric protocols, and class-imbalance
 strategies remain review-sensitive and should be declared in configuration or
 registry files.
 
+New raw datasets must enter through audit-only registry/config updates before
+any target, feature set, split rule, metric, or training task is assigned.
+
 ## Reproducibility
 
 Run definitions are organized through repository configs and scripts so that
@@ -70,6 +82,8 @@ Representative commands:
 
 ```bash
 python scripts/audit_dataset.py --config configs/runs/masses_exclusions_audit.yaml
+python scripts/audit_dataset.py --config configs/runs/masses_exclusions2_audit.yaml
+python scripts/audit_dataset.py --config configs/runs/ht_audit.yaml
 python scripts/evaluate_strong_baselines.py --config configs/runs/masses_exclusions_strong_baselines.yaml
 python scripts/evaluate_robustness.py --config configs/runs/masses_exclusions_robustness.yaml
 python scripts/reproduce_auc97_candidate.py --config configs/runs/masses_exclusions_auc97_candidate.yaml
