@@ -122,3 +122,17 @@ Future phase and workstream tasks should use a gated execution process:
 9. wait for operator acceptance before claiming completion.
 
 Codex must not claim a phase is complete before the operator accepts the work.
+
+## Repo-scoped Codex skills
+
+Repo-specific skills live under `.agents/skills/`.
+
+Future Codex work should invoke the relevant skill by name when possible:
+
+- phase/workstream execution should use `idm-phase-gate-execution`;
+- file modification tasks should use `idm-scope-guard`;
+- roadmap/backend selection tasks should use `idm-roadmap-router`;
+- final reports should use `idm-review-packet`;
+- IDM/data/physics documentation should use `idm-docs-todo-discipline`.
+- accepted local work that should become a branch, commit, push, and PR should
+  use `idm-git-pr-publish`.
