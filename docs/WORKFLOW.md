@@ -102,11 +102,14 @@ fix/<specific-issue-summary>
 review/<review-or-audit-summary>
 ```
 
-For this phase, the recommended branch name is:
+For the current phase, the recommended branch name is:
 
 ```text
-docs/workstream-i-phase-0-repository-framing
+docs/workstream-i-phase-1-data-and-physics
 ```
+
+Phase 0 - Repository Framing is explicitly accepted. Phase 1 work should use
+the accepted Phase 0 authority docs as its starting point.
 
 Commit messages should be concise and scoped to the reviewed change. Codex must
 not stage, commit, push, merge, or open a pull request unless explicitly

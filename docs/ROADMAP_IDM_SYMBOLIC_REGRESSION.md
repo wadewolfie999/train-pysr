@@ -59,6 +59,10 @@ Exit conditions:
 - Validation shows only authorized documentation files changed.
 - Operator acceptance decision is obtained.
 
+Status:
+
+- Explicitly accepted by the operator.
+
 ### Phase 1 - Data and Physics
 
 Main outputs:
@@ -183,9 +187,9 @@ Exit conditions:
   reasons.
 - Workstream I remains unblocked.
 
-## Immediate Next Step After Phase 0
+## Current Next Step
 
-After operator acceptance of Phase 0, the next phase is:
+Because Phase 0 is explicitly accepted, the current next phase is:
 
 ```text
 Workstream I / Phase 1 - Data and Physics
@@ -197,6 +201,7 @@ and audit-only dataset status.
 
 ## Review Status
 
-This roadmap is provisional, unverified, and pending review.
+This roadmap records Phase 0 - Repository Framing as explicitly accepted.
+Future phase outputs and scientific claims remain provisional until reviewed.
 
-It does not claim accepted scientific performance or completed phase status.
+It does not claim accepted scientific performance.

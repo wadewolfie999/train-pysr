@@ -9,6 +9,9 @@ The immediate objective is to move from a PySR-centered BSM exclusion workflow
 to a broader, reproducible IDM symbolic-regression research framework. PySR is
 the first backend to stabilize, not the identity of the project.
 
+Phase 0 - Repository Framing is explicitly accepted. The accepted framing is the
+starting authority for Workstream I / Phase 1 - Data and Physics.
+
 ## Motivation
 
 The thesis workflow needs a repository structure that separates:
@@ -90,7 +93,9 @@ rejection reports, but it must not block Workstream I.
 
 ## Review Status
 
-This brief is provisional, unverified, and pending review.
+This brief records Phase 0 - Repository Framing as explicitly accepted.
+Scientific claims, dataset conventions, physics interpretations, and model
+results remain provisional, unverified, and pending review.
 
 It does not claim confirmed scientific performance, accepted physics
 interpretation, accepted symbolic expressions, or final thesis results.

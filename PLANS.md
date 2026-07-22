@@ -1,227 +1,84 @@
 # Plans
 
-## Current Roadmap Phase
-
-Current phase:
-
-```text
-Workstream I / Phase 0 - Repository Framing
-```
-
-This phase reframes the repository from a PySR-centered BSM exclusion workflow
-into a thesis-oriented IDM symbolic-regression research framework.
-
-Phase 0 remains pending operator acceptance until the review packet is accepted.
-
-## Project Direction
-
-The repository supports symbolic regression for Inert Doublet Model (IDM)
-dataset analysis. PySR is the first backend to stabilize, but the project is
-not limited to PySR.
-
-The roadmap is split into two workstreams:
-
-- Workstream I: main thesis-critical workflow.
-- Workstream II: exploratory backend implementation work that must not block
-  Workstream I.
-
-Priority rule:
-
-```text
-Main Workstream > Operon Probe > Native C++ > Native Rust
-```
-
-## Existing Context To Preserve
-
-- `masses_exclusions` is the first registered modeled dataset.
-- `masses_exclusions2` is audit-only intake; it has a related mass/exclusion
-  schema with added `mhiggs` and is not approved for modeling.
-- `ht` is audit-only intake; it is a distinct likelihood/parameter-style dataset
-  with no assigned modeling target.
-- `Final_CLs` is audit-only unless explicitly reviewed and approved.
-- ROC/AUC must be computed from continuous scores, not hard class labels.
-- AUC > 0.97 is an aspirational target for `masses_exclusions`, not a claim
-  unless proven by an actual reviewed run.
-- All recommendations in this file are provisional, unverified, and pending
-  review.
-
-## Workstream I - Main Workstream
-
-Workstream I is the thesis-critical path.
-
-### Phase 0 - Repository Framing
-
-Purpose:
-
-- Align authority docs with the IDM symbolic-regression research framework.
-- Make PySR the first backend rather than the project identity.
-- Establish Workstream I and Workstream II boundaries.
-
-Dependencies:
-
-- Existing repository docs and current git state audit.
-- Operator execution authorization.
-
-Exit conditions:
-
-- `README.md` identifies the repository as an IDM symbolic-regression framework.
-- `PLANS.md` defines the two-workstream roadmap.
-- `docs/PROJECT_BRIEF.md` and `docs/ROADMAP_IDM_SYMBOLIC_REGRESSION.md` exist.
-- Documentation preserves review-sensitive scientific status.
-- Validation shows only allowed documentation files changed.
-- Operator reviews the acceptance packet.
-
-### Phase 1 - Data and Physics
-
-Purpose:
-
-- Review dataset registrations, target semantics, units, and physics terms.
-- Separate known facts from `TODO` items requiring human or supervisor review.
-
-Dependencies:
-
-- Accepted Phase 0 framing.
-
-Exit conditions:
-
-- Dataset and physics conventions are recorded or marked `TODO`.
-- Audit-only datasets remain blocked from modeling until approved.
-- Feature, target, metric, split, and class-imbalance rules are explicit.
-
-### Phase 2 - Existing Codebase Triage
-
-Purpose:
-
-- Map existing scripts, configs, notebooks, modules, and outputs to the new
-  framework.
-- Identify what can be reused, retired, or generalized.
-
-Dependencies:
-
-- Phase 1 data and physics review.
-
-Exit conditions:
-
-- Existing code paths are classified by role.
-- Reproducibility risks and stale assumptions are identified.
-- No modeling behavior is changed without explicit scope authorization.
-
-### Phase 3 - PySR Baseline Stabilization
-
-Purpose:
-
-- Stabilize PySR as the first symbolic-regression backend.
-- Preserve reproducibility through configs, review records, and output paths.
-
-Dependencies:
-
-- Phase 2 triage.
-- Reviewed dataset and metric conventions.
-
-Exit conditions:
-
-- Baseline PySR workflow is documented, config-driven, and reproducible.
-- Runs record inputs, outputs, seeds, features, targets, metrics, and review
-  status.
-- Claims remain provisional until reviewed.
-
-### Phase 4 - Optimizing PySR
-
-Purpose:
-
-- Improve the PySR workflow after the baseline is stable.
-- Tune search settings and candidate selection under reviewed constraints.
-
-Dependencies:
-
-- Phase 3 baseline stabilization.
-
-Exit conditions:
-
-- Optimization changes are config-driven and reproducible.
-- Metrics and generated expressions are reviewable.
-- No final scientific claim is made without human/supervisor review.
-
-### Phase 5 - Mimic the PySR Workflow for SymbolFit
-
-Purpose:
-
-- Reuse the reviewed PySR workflow structure for a SymbolFit backend.
-- Compare workflow behavior without changing scientific definitions silently.
-
-Dependencies:
-
-- Phase 4 PySR workflow evidence.
-- Reviewed SymbolFit backend requirements.
-
-Exit conditions:
-
-- SymbolFit workflow mirrors the reviewed PySR workflow where appropriate.
-- Backend-specific differences are documented.
-- Comparison readiness is assessed without inventing final metrics.
-
-## Workstream II - Extra Workstream
-
-Workstream II is exploratory. It must not block Workstream I.
-
-### Phase 1 - C++ Implementation - Operon
-
-Purpose:
-
-- Probe Operon/C++ as a possible backend.
-
-Dependencies:
-
-- Workstream I remains prioritized.
-- Reviewed interface assumptions from the main workflow.
-
-Exit conditions:
-
-- Operon feasibility is documented.
-- Any prototype is reproducible or rejected with reasons.
-- No Workstream I gate is delayed by this work.
-
-### Phase 2 - C++ Implementation - Native
-
-Purpose:
-
-- Explore a native C++ symbolic-regression implementation after the Operon
-  probe.
-
-Dependencies:
-
-- Workstream II Phase 1 findings.
-- Continued non-blocking status relative to Workstream I.
-
-Exit conditions:
-
-- Native C++ feasibility, risks, and maintenance cost are documented.
-- Any prototype has clear reproducibility and review boundaries.
-
-### Phase 3 - Rust Implementation - Native
-
-Purpose:
-
-- Explore a native Rust symbolic-regression implementation after higher-
-  priority backend probes.
-
-Dependencies:
-
-- Workstream II Phase 2 findings.
-- Continued non-blocking status relative to Workstream I.
-
-Exit conditions:
-
-- Native Rust feasibility, risks, and maintenance cost are documented.
-- Any prototype is reproducible or explicitly rejected.
-
-## Immediate Next Step
-
-After Phase 0 is accepted, the next phase is:
-
-```text
-Workstream I / Phase 1 - Data and Physics
-```
-
-Phase 1 should resolve or explicitly mark `TODO` for units, label semantics,
-IDM terminology, validation protocol, baseline set, and dataset approval status.
+This file is a repository-local synchronization of the controlling SR-Res
+governance and scientific records. Updating it does not independently ratify,
+amend, supersede, close, or LOCK any decision. A1 review remains required.
+
+## Locked Scientific Sequence
+
+The exact nine-act scientific sequence is:
+
+1. Define the exact scientific claim.
+2. Audit existing PySR evidence.
+3. Lock the validation protocol.
+4. Reproduce the current `>0.97` result.
+5. Run the stability campaign.
+6. Verify and select the reportable result.
+7. Freeze the evidence package.
+8. Build the professor-facing `.ipynb`.
+9. Perform adversarial review and final sign-off.
+
+The sequence is ordered and non-substitutable. The current claim is the
+A1-controlled PySR claim defined for the specified pMSSM benchmark. No
+scientific acceptance may be inferred from files under `SR-Res-work`.
+
+## Latest A1-Authorized State
+
+| Act | Locked sequence item | Current state and boundary |
+| --- | --- | --- |
+| 1 | Define the exact scientific claim | `FINISHED — A1 LOCKED`. The claim definition and paired two-feature/three-feature arm decision are controlling records. |
+| 2 | Audit existing PySR evidence | `CLOSED BY A1`. The A1-ratified calibration did not reopen the act; no claim-bearing PySR stability evidence was found, and historical unrecovered artifacts remain unverifiable and quarantined. |
+| 3 | Lock the validation protocol | `A1 APPROVED AND LOCKED — CLOSED`. `SRRES-VP-1.0.0` is the locked protocol, with the recorded limitation concerning currently unknown grouping information. |
+| 4 | Reproduce the current `>0.97` result | `COMPLETED — BOUNDED DIAGNOSTIC REPRODUCTION OBSERVED — EXACT EQUALITY FALSE — STABILITY NOT ESTABLISHED`. The accepted outputs are standard-ML, non-PySR, non-claim-bearing, and quarantined. |
+| 5 | Run the stability campaign | The historical campaign is `CAMPAIGN_FAILED — NON-ADJUDICABLE — NO SCIENTIFIC VERDICT`. It is frozen; its opportunity under `SRRES-VP-1.0.0` was consumed and must not be retried, repaired, replaced, or promoted as evidence. |
+| 6 | Verify and select the reportable result | `PENDING — UNAUTHORIZED UNTIL REACHED`. No result may be selected or scientifically adjudicated from the failed historical campaign. |
+| 7 | Freeze the evidence package | `PENDING — UNAUTHORIZED UNTIL REACHED`. No evidence package may be frozen from the failed campaign or from unactivated replacement work. |
+| 8 | Build the professor-facing `.ipynb` | `PENDING — UNAUTHORIZED UNTIL REACHED`. Notebook work must wait for a valid frozen evidence package. |
+| 9 | Perform adversarial review and final sign-off | `PENDING — UNAUTHORIZED UNTIL REACHED`. Final sign-off remains an A1 decision. |
+
+## Act 5 Recovery Boundary
+
+A1 approved `SRRES-VP-1.0.1` only as a limited protocol amendment. It:
+
+- freezes the historical Act 5 campaign as failed and non-adjudicable;
+- permits preparation for exactly one fresh replacement campaign;
+- changes no dataset, feature, target, split, seed, search space, budget,
+  selection rule, metric, bootstrap, threshold, or scientific acceptance
+  criterion;
+- prohibits historical Act 5 outputs from serving as evidence for replacement
+  work; and
+- requires a new run identity, new directories, fresh splits, a fresh offline
+  environment, a clean detached checkout, and a separate final A1 execution
+  activation.
+
+This amendment does not authorize the replacement campaign. The only currently
+authorized functional work is the bounded no-fit remediation described by A1:
+prepare a fresh copy and apply the exact runner correction from
+`temp_equation_file=True` to `temp_equation_file=False`, then perform the
+specified no-fit checks and return the remediation evidence for A1 review.
+
+Replacement fitting, symbolic search, metric production, outer-test access,
+scientific Act 5 execution, and evidence adjudication remain unauthorized
+unless a newer explicit A1 activation record exists. Stop before every call to
+`fit`.
+
+## Scope Outside the Current Sequence
+
+IDM application, `Ht.csv`, SymbolFit integration, expression-error work, and
+broader backend exploration are post-current or separately governed scope.
+They must not be presented as substitutes for the controlling nine-act
+campaign. PySR is the first backend for this sequence, not the full project
+identity.
+
+No dataset registration, feature set, target definition, unit convention,
+preprocessing rule, split rule, metric protocol, or class-imbalance strategy
+may be changed through this plan. Unknown or unresolved scientific details
+remain `TODO` or are escalated to A1.
+
+## Operating Rule
+
+Every future execution in `train-pysr` requires the self-contained,
+task-specific A1 authorization described in `AGENTS.md`. Existing evidence,
+dirty work, failed runs, timed-out attempts, and historical outputs must be
+preserved. These synchronized documents are review-ready operating records,
+not final acceptance or execution authority.

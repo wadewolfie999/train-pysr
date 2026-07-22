@@ -1,0 +1,87 @@
+digraph PySR_AUC_Report_Campaign {
+    graph [
+        label="PySR AUC Evidence Campaign — Report Execution Path"
+        labelloc="t"
+        fontsize=20
+        rankdir=TB
+        splines=ortho
+        nodesep=0.45
+        ranksep=0.65
+        bgcolor="white"
+    ];
+
+    node [
+        shape=box
+        style="rounded,filled"
+        fillcolor="#F7F7F7"
+        fontname="Helvetica"
+        fontsize=11
+        margin="0.18,0.12"
+    ];
+
+    edge [
+        fontname="Helvetica"
+        fontsize=9
+        arrowsize=0.8
+    ];
+
+    subgraph cluster_definition {
+        label="I. Evidence Definition";
+        style="rounded,dashed";
+
+        A1 [label="1. Define Exact\nScientific Claim"];
+        A2 [label="2. Audit Existing\nPySR Evidence"];
+        A3 [label="3. Lock Validation\nProtocol"];
+
+        A1 -> A2 -> A3;
+    }
+
+    subgraph cluster_production {
+        label="II. Evidence Production";
+        style="rounded,dashed";
+
+        A4 [label="4. Reproduce Current\n>0.97 AUC Result"];
+        A5 [label="5. Run Bounded\nStability Campaign"];
+        A6 [
+            label="6. Verify Whether\nClaim Survives"
+            shape=diamond
+            fillcolor="#FFF7E6"
+        ];
+
+        A4 -> A5 -> A6;
+    }
+
+    subgraph cluster_reporting {
+        label="III. Evidence Freeze and Reporting";
+        style="rounded,dashed";
+
+        A7 [label="7. Select and Freeze\nReport Evidence"];
+        A8 [label="8. Build Professor-Facing\n.ipynb Report"];
+        A9 [label="9. Adversarial Review\nand Final Sign-Off"];
+
+        A7 -> A8 -> A9;
+    }
+
+    A3 -> A4;
+    A6 -> A7 [label="claim supported"];
+    A6 -> A3 [
+        label="insufficient / failed"
+        style=dashed
+        constraint=false
+    ];
+
+    START [
+        label="Phase 0 Governance\nCLOSED"
+        shape=oval
+        fillcolor="#EAF4EA"
+    ];
+
+    END [
+        label="Professor-Ready\nValidated Report"
+        shape=oval
+        fillcolor="#EAF4EA"
+    ];
+
+    START -> A1;
+    A9 -> END;
+}

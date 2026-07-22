@@ -78,15 +78,17 @@ Main Workstream > Operon Probe > Native C++ > Native Rust
 Current phase:
 
 ```text
-Workstream I / Phase 0 - Repository Framing
+Workstream I / Phase 1 - Data and Physics
 ```
 
-Phase 0 is a documentation and planning phase. Its purpose is to align the
-repository language and planning documents with the IDM symbolic-regression
-framework before later data, physics, backend, or implementation work proceeds.
+Phase 0 - Repository Framing is explicitly accepted. The repository framing,
+two-workstream structure, PySR-first-backend boundary, and gated review workflow
+are accepted as the starting authority for subsequent phase work.
 
-Phase 0 is not accepted or complete until the operator reviews the evidence and
-explicitly accepts it.
+Phase 1 is the current documentation and data-contract phase. It should record
+dataset contracts, physics assumptions, nested-sampling boundaries, labels,
+targets, units, preprocessing assumptions, and validation rules before PySR
+baseline stabilization or later backend comparison proceeds.
 
 ## Current Scientific Status
 

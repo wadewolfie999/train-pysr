@@ -46,6 +46,16 @@ Workstream I / Phase 1 - Data and Physics
 Workstream II / Phase 1 - C++ Implementation - Operon
 ```
 
+## Phase Status
+
+Workstream I / Phase 0 - Repository Framing is explicitly accepted.
+
+The current next phase is:
+
+```text
+Workstream I / Phase 1 - Data and Physics
+```
+
 ## Report Naming
 
 Use descriptive filenames that include the workstream, phase, and report role.
