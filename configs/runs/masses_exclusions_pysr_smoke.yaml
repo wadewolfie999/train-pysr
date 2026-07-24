@@ -28,9 +28,6 @@ runtime:
   mkl_num_threads: 1
   openblas_num_threads: 1
   pythonunbuffered: true
-reference:
-  fixed_split_hist_gradient_boosting_auc: 0.9757422365348225
-  comparison_status: provisional_unverified_pending_review
 pysr_options:
   niterations: 1
   maxsize: 8

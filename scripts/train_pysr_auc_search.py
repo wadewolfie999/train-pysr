@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Run a reviewed PySR continuous-score search for binary ROC/AUC evaluation.
 
-This script fits PySR with explicit squared-error loss on binary 0/1 targets as
-a symbolic continuous-score surrogate. It does not directly optimize AUC. ROC
-and AUC are computed after fitting from continuous PySR predictions only.
+This script fits PySR with a registry-validated continuous-score surrogate on
+binary 0/1 targets. It does not directly optimize ROC-AUC. ROC-AUC and average
+precision are computed after fitting from continuous PySR predictions only.
 
 Outputs are provisional, unverified, and pending thesis-author review.
 """
@@ -27,10 +27,17 @@ from importlib import metadata
 from pathlib import Path
 from typing import Any
 
+from pysr_dials import (
+    BASE_FEATURES,
+    FORBIDDEN_COLUMNS,
+    STATUS,
+    build_feature_frame,
+    fit_transform_preprocessor,
+    load_and_resolve_config,
+    split_rows,
+)
 
-STATUS = "provisional, unverified, pending review"
-EXPECTED_FEATURES = ["mchi1", "mchipm1"]
-FORBIDDEN_COLUMNS = {"Final_CLs"}
+
 OUTPUT_FILES = (
     "pysr_metrics.json",
     "pysr_equations.csv",
@@ -38,6 +45,7 @@ OUTPUT_FILES = (
     "pysr_environment.json",
     "pysr_git_state.json",
     "pysr_runtime_settings.json",
+    "pysr_preprocessing.json",
     "pysr_test_scores.csv",
     "pysr_roc_curve_data.csv",
     "pysr_roc_curve.png",
@@ -78,25 +86,6 @@ def parse_args() -> argparse.Namespace:
         help="Initialize the PySR juliacall backend and report environment details.",
     )
     return parser.parse_args()
-
-
-def load_yaml(path: Path) -> dict[str, Any]:
-    try:
-        import yaml
-    except ImportError as exc:
-        raise SystemExit("PyYAML is required. Install pyyaml before running.") from exc
-
-    with path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
-    if not isinstance(data, dict):
-        raise ValueError(f"Config must be a YAML mapping: {path}")
-    return data
-
-
-def require_config(config: dict[str, Any], keys: list[str]) -> None:
-    missing = [key for key in keys if key not in config]
-    if missing:
-        raise ValueError(f"Missing required config keys: {missing}")
 
 
 def to_jsonable(value: Any) -> Any:
@@ -179,6 +168,7 @@ def collect_environment(*, initialize_backend: bool) -> dict[str, Any]:
             key: os.environ.get(key)
             for key in [
                 "JULIA_NUM_THREADS",
+                "PYTHON_JULIACALL_THREADS",
                 "JULIA_DEPOT_PATH",
                 "PYTHON_JULIACALL_EXE",
                 "PYTHON_JULIACALL_HANDLE_SIGNALS",
@@ -219,57 +209,17 @@ def collect_environment(*, initialize_backend: bool) -> dict[str, Any]:
     return env
 
 
-def validate_config(config: dict[str, Any]) -> None:
-    require_config(
-        config,
-        [
-            "run_id",
-            "dataset_id",
-            "dataset_config",
-            "raw_path",
-            "task_type",
-            "features",
-            "target",
-            "positive_label",
-            "test_size",
-            "split_method",
-            "random_seed",
-            "auc_rule",
-            "objective",
-            "expression_simplicity",
-            "output_dir",
-            "review_status",
-            "run_policy",
-            "runtime",
-            "reference",
-            "pysr_options",
-        ],
-    )
+def validate_resolved_config(config: dict[str, Any]) -> None:
     if config["task_type"] != "pysr_symbolic_score_search":
         raise ValueError(f"Unexpected task_type: {config['task_type']}")
-    if list(config["features"]) != EXPECTED_FEATURES:
-        raise ValueError(f"PySR v1 must use approved features only: {EXPECTED_FEATURES}")
-    if FORBIDDEN_COLUMNS.intersection(config["features"] + [config["target"]]):
+    if FORBIDDEN_COLUMNS.intersection(config["model_features"] + [config["target"]]):
         raise ValueError("Final_CLs must not be used as a feature or target.")
-    if config["auc_rule"] != "continuous_scores_only":
-        raise ValueError("AUC rule must be continuous_scores_only.")
-    if config["split_method"] != "stratified":
-        raise ValueError("Only stratified split is implemented.")
-    expected_objective = "squared_error_symbolic_score_surrogate_with_roc_auc_evaluation"
-    if config["objective"] != expected_objective:
-        raise ValueError(f"PySR objective must be {expected_objective!r}.")
-    if config["run_policy"].get("allow_overwrite") is not False:
-        raise ValueError("Run policy must set allow_overwrite: false.")
-    if config["runtime"].get("python_juliacall_handle_signals") != "yes":
-        raise ValueError('Runtime must set python_juliacall_handle_signals: "yes".')
-    options = config["pysr_options"]
-    if "elementwise_loss" not in options:
-        raise ValueError("PySR options must explicitly define squared-error elementwise_loss.")
-    expected_loss = "loss(prediction, target, weight) = weight * (prediction - target)^2"
-    if options["elementwise_loss"] != expected_loss:
-        raise ValueError(f"elementwise_loss must be {expected_loss!r}.")
-    if options.get("temp_equation_file") is not False:
-        raise ValueError("PySR 1.5.10 output_directory runs require temp_equation_file: false.")
+    if config["metrics"]["score_source"] != "continuous_pysr_prediction":
+        raise ValueError("Metrics must use continuous PySR predictions.")
+    if config["output"].get("allow_overwrite") is not False:
+        raise ValueError("Output policy must set allow_overwrite: false.")
+    if config["pysr_options"].get("temp_equation_file") is not False:
+        raise ValueError("PySR output-directory runs require temp_equation_file: false.")
 
 
 def prepare_output_dir(output_dir: Path, dry_run: bool, check_env: bool) -> None:
@@ -285,7 +235,7 @@ def prepare_output_dir(output_dir: Path, dry_run: bool, check_env: bool) -> None
 
 
 def check_git_policy(config: dict[str, Any], state: dict[str, Any], *, dry_run: bool) -> None:
-    require_clean = bool(config["run_policy"].get("require_clean_worktree", False))
+    require_clean = bool(config["output"].get("require_clean_worktree", False))
     if require_clean and not dry_run and not state["is_clean"]:
         detail = "\n".join(state["status_short"])
         raise SystemExit(f"Refusing training run: clean Git worktree is required.\n{detail}")
@@ -294,36 +244,31 @@ def check_git_policy(config: dict[str, Any], state: dict[str, Any], *, dry_run: 
 def apply_runtime_environment(config: dict[str, Any]) -> None:
     runtime = config.get("runtime", {})
     mapping = {
-        "julia_num_threads": "JULIA_NUM_THREADS",
+        "julia_threads": "JULIA_NUM_THREADS",
+        "julia_threads_juliacall": "PYTHON_JULIACALL_THREADS",
         "python_juliacall_handle_signals": "PYTHON_JULIACALL_HANDLE_SIGNALS",
-        "omp_num_threads": "OMP_NUM_THREADS",
-        "mkl_num_threads": "MKL_NUM_THREADS",
-        "openblas_num_threads": "OPENBLAS_NUM_THREADS",
+        "omp_threads": "OMP_NUM_THREADS",
+        "mkl_threads": "MKL_NUM_THREADS",
+        "openblas_threads": "OPENBLAS_NUM_THREADS",
     }
     for config_key, env_key in mapping.items():
-        value = runtime.get(config_key)
-        if value is not None and os.environ.get(env_key) is None:
-            os.environ[env_key] = str(value)
-    if runtime.get("pythonunbuffered") is True and os.environ.get("PYTHONUNBUFFERED") is None:
+        source_key = "julia_threads" if config_key == "julia_threads_juliacall" else config_key
+        value = runtime.get(source_key)
+        if value is None:
+            continue
+        existing = os.environ.get(env_key)
+        if existing is not None and existing != str(value):
+            raise SystemExit(
+                f"Environment conflict: {env_key}={existing!r}, config requires {str(value)!r}"
+            )
+        os.environ[env_key] = str(value)
+    if runtime.get("python_unbuffered") is True:
+        existing = os.environ.get("PYTHONUNBUFFERED")
+        if existing is not None and existing != "1":
+            raise SystemExit(
+                f"Environment conflict: PYTHONUNBUFFERED={existing!r}, config requires '1'"
+            )
         os.environ["PYTHONUNBUFFERED"] = "1"
-
-
-def resolve_positive_label(y_values: list[Any], configured: Any) -> tuple[Any, str]:
-    unique = sorted(set(y_values))
-    if configured != "requires_review":
-        if configured not in unique:
-            raise ValueError(f"Configured positive_label {configured!r} not in {unique!r}")
-        return configured, "configured"
-
-    numeric_unique = sorted(float(value) for value in unique)
-    if numeric_unique == [0.0, 1.0]:
-        matching = [value for value in unique if float(value) == 1.0]
-        return matching[0], "inferred_numeric_one_pending_review"
-
-    raise ValueError(
-        "positive_label is requires_review and cannot be inferred from labels. "
-        "Set positive_label explicitly after review."
-    )
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -350,7 +295,8 @@ def write_scores_csv(
     path: Path,
     *,
     row_indices: Any,
-    x_test: Any,
+    raw_test: Any,
+    model_test: Any,
     y_test: Any,
     scores: Any,
     positive_label: Any,
@@ -366,26 +312,33 @@ def write_scores_csv(
             "score_source",
             "positive_label",
         ]
+        fieldnames.extend(f"model_feature_{name}" for name in model_test.columns)
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
-        for row_index, (_, feature_row), y_value, score in zip(
+        for row_index, (_, raw_row), (_, model_row), y_value, score in zip(
             row_indices,
-            x_test.iterrows(),
+            raw_test.iterrows(),
+            model_test.iterrows(),
             y_test.tolist(),
             scores,
         ):
-            writer.writerow(
+            payload = {
+                "row_index": int(row_index),
+                "split_membership": "test",
+                "mchi1": float(raw_row["mchi1"]),
+                "mchipm1": float(raw_row["mchipm1"]),
+                "y_true": int(y_value),
+                "score": float(score),
+                "score_source": "PySRRegressor.predict_continuous_score",
+                "positive_label": to_jsonable(positive_label),
+            }
+            payload.update(
                 {
-                    "row_index": int(row_index),
-                    "split_membership": "test",
-                    "mchi1": float(feature_row["mchi1"]),
-                    "mchipm1": float(feature_row["mchipm1"]),
-                    "y_true": int(y_value),
-                    "score": float(score),
-                    "score_source": "PySRRegressor.predict_continuous_score",
-                    "positive_label": to_jsonable(positive_label),
+                    f"model_feature_{name}": float(model_row[name])
+                    for name in model_test.columns
                 }
             )
+            writer.writerow(payload)
 
 
 def maybe_write_roc_plot(path: Path, fpr: Any, tpr: Any, auc: float) -> bool:
@@ -431,48 +384,116 @@ def write_manifest(output_dir: Path) -> None:
     )
 
 
+def sympy_square(value: Any) -> Any:
+    return value**2
+
+
+def sympy_guarded_div(left: Any, right: Any) -> Any:
+    return left / (abs(right) + 1.0e-12)
+
+
 def pysr_kwargs(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
     options = dict(config["pysr_options"])
-    workspace = output_dir / "pysr_workspace"
-    tempdir = output_dir / "pysr_temp"
+    workspace = output_dir / str(config["output"].get("workspace_subdir", "pysr_workspace"))
+    tempdir = output_dir / str(config["output"].get("temp_subdir", "pysr_temp"))
     workspace.mkdir(parents=True, exist_ok=False)
     tempdir.mkdir(parents=True, exist_ok=False)
-    return {
+    kwargs: dict[str, Any] = {
         "niterations": int(options["niterations"]),
         "maxsize": int(options["maxsize"]),
         "populations": int(options["populations"]),
-        "population_size": int(options.get("population_size", 27)),
+        "population_size": int(options["population_size"]),
         "parsimony": float(options["parsimony"]),
         "timeout_in_seconds": float(options["timeout_in_seconds"]),
-        "parallelism": options.get("parallelism", "serial"),
-        "precision": int(options.get("precision", 32)),
-        "deterministic": bool(options.get("deterministic", True)),
-        "warm_start": bool(options.get("warm_start", False)),
-        "temp_equation_file": bool(options.get("temp_equation_file", True)),
-        "delete_tempfiles": bool(options.get("delete_tempfiles", False)),
-        "model_selection": options.get("model_selection", "best"),
+        "parallelism": options["parallelism"],
+        "procs": options.get("procs"),
+        "precision": int(options["precision"]),
+        "deterministic": bool(options["deterministic"]),
+        "warm_start": bool(options["warm_start"]),
+        "temp_equation_file": bool(options["temp_equation_file"]),
+        "delete_tempfiles": bool(options["delete_tempfiles"]),
+        "model_selection": options["model_selection"],
         "elementwise_loss": options["elementwise_loss"],
-        "binary_operators": list(options.get("binary_operators", ["+", "-", "*", "/"])),
-        "unary_operators": list(options.get("unary_operators", [])),
+        "binary_operators": list(options["binary_operators"]),
+        "unary_operators": list(options["unary_operators"]),
         "random_state": int(config["random_seed"]),
         "output_directory": str(workspace),
         "run_id": config["run_id"],
         "tempdir": str(tempdir),
-        "verbosity": int(options.get("verbosity", 1)),
-        "progress": bool(options.get("progress", False)),
+        "verbosity": 1,
+        "progress": False,
     }
+    for optional_name in [
+        "maxdepth",
+        "complexity_of_operators",
+        "constraints",
+        "nested_constraints",
+    ]:
+        if options.get(optional_name) is not None:
+            kwargs[optional_name] = options[optional_name]
+    mapping_functions = {"square": sympy_square, "guarded_div": sympy_guarded_div}
+    mapping_names = config.get("custom_sympy_mappings", [])
+    if mapping_names:
+        kwargs["extra_sympy_mappings"] = {
+            name: mapping_functions[name] for name in mapping_names
+        }
+    return kwargs
+
+
+def runtime_settings_payload(
+    config: dict[str, Any], kwargs: dict[str, Any]
+) -> dict[str, Any]:
+    stable_kwargs = dict(kwargs)
+    mappings = stable_kwargs.get("extra_sympy_mappings")
+    if isinstance(mappings, dict):
+        operator_definitions = [
+            str(value)
+            for value in (
+                list(config["pysr_options"]["unary_operators"])
+                + list(config["pysr_options"]["binary_operators"])
+            )
+            if "(" in str(value) and "=" in str(value)
+        ]
+        stable_kwargs["extra_sympy_mappings"] = {
+            str(name): {
+                "python_callable": getattr(function, "__name__", type(function).__name__),
+                "operator_definition": next(
+                    (
+                        definition
+                        for definition in operator_definitions
+                        if definition.split("(", 1)[0].strip() == str(name)
+                    ),
+                    None,
+                ),
+            }
+            for name, function in sorted(mappings.items())
+        }
+    return {
+        "status": STATUS,
+        "requested_environment": config["runtime"],
+        **stable_kwargs,
+    }
+
+
+def validate_observed_threads(config: dict[str, Any], environment: dict[str, Any]) -> None:
+    requested = int(config["runtime"]["julia_threads"])
+    observed = environment.get("julia", {}).get("threads")
+    if observed != requested:
+        raise SystemExit(
+            f"Julia thread mismatch: config requested {requested}, backend reported {observed}"
+        )
 
 
 def main() -> int:
     args = parse_args()
     config_path = Path(args.config)
-    config = load_yaml(config_path)
-    validate_config(config)
+    _, _, config = load_and_resolve_config(config_path)
+    validate_resolved_config(config)
     apply_runtime_environment(config)
 
     raw_path = Path(config["raw_path"])
     dataset_config = Path(config["dataset_config"])
-    output_dir = Path(config["output_dir"])
+    output_dir = Path(config["output"]["output_dir"])
     if not raw_path.exists():
         raise FileNotFoundError(raw_path)
     if not dataset_config.exists():
@@ -484,62 +505,89 @@ def main() -> int:
 
     environment = collect_environment(initialize_backend=args.check_env)
     if args.check_env:
+        validate_observed_threads(config, environment)
         print(json.dumps(to_jsonable(environment), indent=2, sort_keys=True))
         return 0
 
     try:
         import pandas as pd
         from sklearn.metrics import average_precision_score, roc_auc_score, roc_curve
-        from sklearn.model_selection import train_test_split
         from sklearn.utils.class_weight import compute_sample_weight
     except ImportError as exc:
         raise SystemExit("pandas and scikit-learn are required for PySR evaluation.") from exc
 
     data = pd.read_csv(raw_path)
-    features = list(config["features"])
     target = config["target"]
-    missing_columns = [column for column in features + [target] if column not in data.columns]
+    missing_columns = [
+        column for column in BASE_FEATURES + [target] if column not in data.columns
+    ]
     if missing_columns:
         raise ValueError(f"Configured columns not found in dataset: {missing_columns}")
-    if FORBIDDEN_COLUMNS.intersection(features):
+    if FORBIDDEN_COLUMNS.intersection(config["model_features"]):
         raise ValueError("Final_CLs must not be used as a feature.")
 
-    x = data[features]
     y_original = data[target]
-    positive_label, positive_label_status = resolve_positive_label(
-        y_original.tolist(), config["positive_label"]
+    positive_label = config["positive_label"]
+    if positive_label not in set(y_original.tolist()):
+        raise ValueError(f"Configured positive label {positive_label!r} is absent")
+    train_index, test_index, y = split_rows(
+        data,
+        target=target,
+        positive_label=positive_label,
+        test_size=config["test_size"],
+        random_seed=config["random_seed"],
     )
-    y = (y_original == positive_label).astype(int)
-    train_index, test_index = train_test_split(
-        data.index,
-        test_size=float(config["test_size"]),
-        random_state=int(config["random_seed"]),
-        stratify=y,
+    raw_train = data.loc[train_index, BASE_FEATURES]
+    raw_test = data.loc[test_index, BASE_FEATURES]
+    feature_set = config["preprocessing"]["feature_set"]
+    x_train_unscaled = build_feature_frame(data.loc[train_index], feature_set)
+    x_test_unscaled = build_feature_frame(data.loc[test_index], feature_set)
+    x_train, x_test, preprocessing_metadata = fit_transform_preprocessor(
+        x_train_unscaled,
+        x_test_unscaled,
+        mode=config["preprocessing"]["mode"],
+        reference_scales=config["preprocessing"]["reference_scales"],
     )
-    x_train = x.loc[train_index]
-    x_test = x.loc[test_index]
     y_train = y.loc[train_index]
     y_test = y.loc[test_index]
-    sample_weight = compute_sample_weight(class_weight="balanced", y=y_train)
+    sample_weight = None
+    sample_weight_note = "none"
+    if config["sample_weight_preset"] == "balanced":
+        sample_weight = compute_sample_weight(class_weight="balanced", y=y_train)
+        sample_weight_note = "compute_sample_weight(class_weight='balanced', y=y_train)"
+    elif config["sample_weight_preset"] == "manual_class_weights":
+        manual = config["manual_class_weights"]
+        class_weights = {int(key): float(value) for key, value in manual.items()}
+        sample_weight = y_train.map(class_weights).to_numpy()
+        sample_weight_note = f"manual class weights: {manual}"
 
     if args.dry_run:
         print("Dry run passed. No PySR training was launched.")
         print(f"Run id: {config['run_id']}")
         print(f"Dataset: {raw_path}")
-        print(f"Features: {features}")
+        print(f"Model features: {list(x_train.columns)}")
+        print(f"Preprocessing: {config['preprocessing']['mode']}")
         print(f"Target: {target}")
         print(f"Output dir: {output_dir}")
         print(f"Train rows: {len(x_train)}")
         print(f"Test rows: {len(x_test)}")
-        print(f"Positive label status: {positive_label_status}")
+        print(f"Positive label: {positive_label}")
+        print(f"Sample weighting: {config['sample_weight_preset']}")
+        print(f"Binary operators: {config['pysr_options']['binary_operators']}")
+        print(f"Unary operators: {config['pysr_options']['unary_operators']}")
         print(f"Git clean: {git['is_clean']}")
+        print("Resolved configuration:")
+        print(json.dumps(to_jsonable(config), indent=2, sort_keys=True))
         return 0
 
-    output_dir.mkdir(parents=True, exist_ok=True)
     log_path = output_dir / "pysr_stdout_stderr.log"
     write_json(output_dir / "pysr_git_state.json", {"status": STATUS, **git})
+    write_json(output_dir / "pysr_preprocessing.json", preprocessing_metadata)
     kwargs = pysr_kwargs(config, output_dir)
-    write_json(output_dir / "pysr_runtime_settings.json", {"status": STATUS, **kwargs})
+    write_json(
+        output_dir / "pysr_runtime_settings.json",
+        runtime_settings_payload(config, kwargs),
+    )
 
     with log_path.open("w", encoding="utf-8") as log_handle:
         log_handle.write(f"PySR run started at {datetime.now(timezone.utc).isoformat()}\n")
@@ -551,28 +599,27 @@ def main() -> int:
             from pysr import PySRRegressor
 
             environment = collect_environment(initialize_backend=True)
+            validate_observed_threads(config, environment)
             write_json(output_dir / "pysr_environment.json", environment)
             model = PySRRegressor(**kwargs)
-            model.fit(x_train.to_numpy(), y_train.to_numpy(), weights=sample_weight)
+            fit_kwargs = {} if sample_weight is None else {"weights": sample_weight}
+            model.fit(x_train.to_numpy(), y_train.to_numpy(), **fit_kwargs)
             scores = model.predict(x_test.to_numpy())
 
     auc = float(roc_auc_score(y_test, scores))
     average_precision = float(average_precision_score(y_test, scores))
     fpr, tpr, thresholds = roc_curve(y_test, scores)
-    reference_auc = float(config["reference"]["fixed_split_hist_gradient_boosting_auc"])
 
     metrics = {
         "status": STATUS,
         "run_id": config["run_id"],
         "dataset_id": config["dataset_id"],
         "score_source": "PySRRegressor.predict_continuous_score",
-        "fit_objective": config["objective"],
+        "fit_objective": "symbolic_continuous_score_surrogate",
         "loss": config["pysr_options"]["elementwise_loss"],
         "roc_auc": auc,
         "average_precision": average_precision,
-        "reference_fixed_split_hist_gradient_boosting_auc": reference_auc,
-        "auc_minus_reference": auc - reference_auc,
-        "auc_rule": config["auc_rule"],
+        "auc_rule": "continuous_scores_only",
         "note": STATUS,
     }
     metadata_payload = {
@@ -586,10 +633,13 @@ def main() -> int:
         "dataset_id": config["dataset_id"],
         "task_type": config["task_type"],
         "review_status": config["review_status"],
-        "features": features,
+        "base_features": BASE_FEATURES,
+        "model_features": list(x_train.columns),
+        "feature_set": feature_set,
+        "preprocessing": preprocessing_metadata,
         "target": target,
         "positive_label": to_jsonable(positive_label),
-        "positive_label_status": positive_label_status,
+        "positive_label_status": "configured_provisional_pending_physics_review",
         "split_method": config["split_method"],
         "test_size": float(config["test_size"]),
         "random_seed": int(config["random_seed"]),
@@ -599,10 +649,12 @@ def main() -> int:
             "train": {str(k): int(v) for k, v in y_train.value_counts().sort_index().items()},
             "test": {str(k): int(v) for k, v in y_test.value_counts().sort_index().items()},
         },
-        "sample_weight": "compute_sample_weight(class_weight='balanced', y=y_train)",
+        "sample_weight_preset": config["sample_weight_preset"],
+        "sample_weight": sample_weight_note,
+        "operator_presets": config["operator_presets"],
         "pysr_options": config["pysr_options"],
         "fit_objective_note": (
-            "PySR fits weighted squared-error symbolic continuous scores to binary 0/1 targets. "
+            "PySR fits a configured symbolic continuous-score surrogate to binary 0/1 targets. "
             "ROC-AUC is evaluated afterward from continuous scores and is not directly optimized."
         ),
         "git_head": git["head"],
@@ -610,7 +662,8 @@ def main() -> int:
         "notes": [
             "Raw data was read only and not modified.",
             "Final_CLs was excluded from features and target.",
-            "ROC/AUC was computed from continuous scores only.",
+            "ROC-AUC and average precision were computed from continuous scores only.",
+            "No external reference-model metric was loaded or compared.",
             "Outputs are provisional, unverified, and pending review.",
         ],
     }
@@ -619,7 +672,8 @@ def main() -> int:
     write_scores_csv(
         output_dir / "pysr_test_scores.csv",
         row_indices=test_index,
-        x_test=x_test,
+        raw_test=raw_test,
+        model_test=x_test,
         y_test=y_test,
         scores=scores,
         positive_label=positive_label,
@@ -640,7 +694,7 @@ def main() -> int:
 
     print(f"Wrote PySR outputs to {output_dir}")
     print(f"Observed ROC-AUC in this run, pending review: {auc:.6f}")
-    print(f"Reference fixed-split HistGradientBoosting AUC: {reference_auc:.6f}")
+    print(f"Observed average precision in this run, pending review: {average_precision:.6f}")
     return 0
 
 

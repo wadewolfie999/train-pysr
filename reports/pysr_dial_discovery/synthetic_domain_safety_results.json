@@ -1,0 +1,414 @@
+{
+  "aggregate_checks": {
+    "constructor_dials_complete": true,
+    "failed_compilations": [],
+    "fit_call_count_zero": true,
+    "live_initialized": true,
+    "live_requested": true,
+    "missing_operator_probes": [],
+    "passed": true,
+    "safe_domain_failures": [],
+    "threads_match": true
+  },
+  "fit_call_count": 0,
+  "live": {
+    "binary": {
+      "*": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 7,
+        "probe_count": 7
+      },
+      "+": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 7,
+        "probe_count": 7
+      },
+      "-": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 7,
+        "probe_count": 7
+      },
+      "/": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 5,
+        "probe_count": 7
+      },
+      "^": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 5,
+        "probe_count": 7
+      },
+      "guarded_div": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 7,
+        "probe_count": 7
+      }
+    },
+    "fit_call_count": 0,
+    "initialized": true,
+    "julia_version": "1.12.6",
+    "missing_constructor_dials": [],
+    "observed_threads": 1,
+    "offline": true,
+    "pysr_constructor_parameters": [
+      "adaptive_parsimony_scaling",
+      "alpha",
+      "annealing",
+      "autodiff_backend",
+      "batch_size",
+      "batching",
+      "binary_operators",
+      "bumper",
+      "cluster_manager",
+      "complexity_mapping",
+      "complexity_of_constants",
+      "complexity_of_operators",
+      "complexity_of_variables",
+      "constraints",
+      "crossover_probability",
+      "delete_tempfiles",
+      "denoise",
+      "deterministic",
+      "dimensional_constraint_penalty",
+      "dimensionless_constants_only",
+      "early_stop_condition",
+      "elementwise_loss",
+      "expression_spec",
+      "extra_jax_mappings",
+      "extra_sympy_mappings",
+      "extra_torch_mappings",
+      "fast_cycle",
+      "fraction_replaced",
+      "fraction_replaced_hof",
+      "heap_size_hint_in_bytes",
+      "hof_migration",
+      "input_stream",
+      "kwargs",
+      "logger_spec",
+      "loss_function",
+      "loss_function_expression",
+      "loss_scale",
+      "max_evals",
+      "maxdepth",
+      "maxsize",
+      "migration",
+      "model_selection",
+      "ncycles_per_iteration",
+      "nested_constraints",
+      "niterations",
+      "optimize_probability",
+      "optimizer_algorithm",
+      "optimizer_f_calls_limit",
+      "optimizer_iterations",
+      "optimizer_nrestarts",
+      "output_directory",
+      "output_jax_format",
+      "output_torch_format",
+      "parallelism",
+      "parsimony",
+      "perturbation_factor",
+      "population_size",
+      "populations",
+      "precision",
+      "print_precision",
+      "probability_negate_constant",
+      "procs",
+      "progress",
+      "random_state",
+      "run_id",
+      "select_k_features",
+      "should_optimize_constants",
+      "should_simplify",
+      "skip_mutation_failures",
+      "temp_equation_file",
+      "tempdir",
+      "timeout_in_seconds",
+      "topn",
+      "tournament_selection_n",
+      "tournament_selection_p",
+      "turbo",
+      "unary_operators",
+      "update",
+      "update_verbosity",
+      "use_frequency",
+      "use_frequency_in_tournament",
+      "verbosity",
+      "warm_start",
+      "warmup_maxsize_by",
+      "weight_add_node",
+      "weight_delete_node",
+      "weight_do_nothing",
+      "weight_insert_node",
+      "weight_mutate_constant",
+      "weight_mutate_operator",
+      "weight_optimize",
+      "weight_randomize",
+      "weight_rotate_tree",
+      "weight_simplify",
+      "weight_swap_operands"
+    ],
+    "requested_threads": 1,
+    "required_constructor_dials_present": [
+      "binary_operators",
+      "complexity_of_operators",
+      "constraints",
+      "delete_tempfiles",
+      "deterministic",
+      "elementwise_loss",
+      "maxdepth",
+      "maxsize",
+      "model_selection",
+      "nested_constraints",
+      "niterations",
+      "output_directory",
+      "parallelism",
+      "parsimony",
+      "population_size",
+      "populations",
+      "precision",
+      "procs",
+      "random_state",
+      "run_id",
+      "temp_equation_file",
+      "tempdir",
+      "timeout_in_seconds",
+      "unary_operators",
+      "warm_start"
+    ],
+    "symbolic_regression_version": "1.11.3",
+    "unary": {
+      "cos": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 10,
+        "probe_count": 10
+      },
+      "coth": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 9,
+        "probe_count": 10
+      },
+      "exp": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 8,
+        "probe_count": 10
+      },
+      "inv": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 9,
+        "probe_count": 10
+      },
+      "log": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 7,
+        "probe_count": 10
+      },
+      "sin": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 10,
+        "probe_count": 10
+      },
+      "sqrt": {
+        "all_finite": false,
+        "compiled": true,
+        "finite_count": 8,
+        "probe_count": 10
+      },
+      "square": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 10,
+        "probe_count": 10
+      },
+      "tan": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 10,
+        "probe_count": 10
+      },
+      "tanh": {
+        "all_finite": true,
+        "compiled": true,
+        "finite_count": 10,
+        "probe_count": 10
+      }
+    }
+  },
+  "numpy_synthetic": {
+    "binary": {
+      "*": {
+        "all_finite": true,
+        "finite_count": 7,
+        "nonfinite_pairs": [],
+        "probe_count": 7
+      },
+      "+": {
+        "all_finite": true,
+        "finite_count": 7,
+        "nonfinite_pairs": [],
+        "probe_count": 7
+      },
+      "-": {
+        "all_finite": true,
+        "finite_count": 7,
+        "nonfinite_pairs": [],
+        "probe_count": 7
+      },
+      "/": {
+        "all_finite": false,
+        "finite_count": 5,
+        "nonfinite_pairs": [
+          [
+            -1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "probe_count": 7
+      },
+      "^": {
+        "all_finite": false,
+        "finite_count": 5,
+        "nonfinite_pairs": [
+          [
+            -2.0,
+            0.5
+          ],
+          [
+            1000.0,
+            1000.0
+          ]
+        ],
+        "probe_count": 7
+      },
+      "guarded_div": {
+        "all_finite": true,
+        "finite_count": 7,
+        "nonfinite_pairs": [],
+        "probe_count": 7
+      }
+    },
+    "synthetic_binary_left": [
+      -2.0,
+      -1.0,
+      0.0,
+      1e-12,
+      1.0,
+      10.0,
+      1000.0
+    ],
+    "synthetic_binary_right": [
+      0.5,
+      0.0,
+      0.0,
+      1e-12,
+      -1.0,
+      2.0,
+      1000.0
+    ],
+    "synthetic_unary_inputs": [
+      -2.0,
+      -1e-12,
+      0.0,
+      1e-12,
+      0.5,
+      1.0,
+      10.0,
+      100.0,
+      1000.0,
+      1981.43446
+    ],
+    "unary": {
+      "cos": {
+        "all_finite": true,
+        "finite_count": 10,
+        "nonfinite_input_values": [],
+        "probe_count": 10
+      },
+      "coth": {
+        "all_finite": false,
+        "finite_count": 9,
+        "nonfinite_input_values": [
+          0.0
+        ],
+        "probe_count": 10
+      },
+      "exp": {
+        "all_finite": false,
+        "finite_count": 8,
+        "nonfinite_input_values": [
+          1000.0,
+          1981.43446
+        ],
+        "probe_count": 10
+      },
+      "inv": {
+        "all_finite": false,
+        "finite_count": 9,
+        "nonfinite_input_values": [
+          0.0
+        ],
+        "probe_count": 10
+      },
+      "log": {
+        "all_finite": false,
+        "finite_count": 7,
+        "nonfinite_input_values": [
+          -2.0,
+          -1e-12,
+          0.0
+        ],
+        "probe_count": 10
+      },
+      "sin": {
+        "all_finite": true,
+        "finite_count": 10,
+        "nonfinite_input_values": [],
+        "probe_count": 10
+      },
+      "sqrt": {
+        "all_finite": false,
+        "finite_count": 8,
+        "nonfinite_input_values": [
+          -2.0,
+          -1e-12
+        ],
+        "probe_count": 10
+      },
+      "square": {
+        "all_finite": true,
+        "finite_count": 10,
+        "nonfinite_input_values": [],
+        "probe_count": 10
+      },
+      "tan": {
+        "all_finite": true,
+        "finite_count": 10,
+        "nonfinite_input_values": [],
+        "probe_count": 10
+      },
+      "tanh": {
+        "all_finite": true,
+        "finite_count": 10,
+        "nonfinite_input_values": [],
+        "probe_count": 10
+      }
+    }
+  },
+  "passed": true,
+  "status": "provisional, unverified, pending review"
+}

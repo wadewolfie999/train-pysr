@@ -5,11 +5,10 @@
 This repository supports a thesis-oriented research workflow for symbolic
 regression on Inert Doublet Model (IDM) dataset analysis.
 
-The current repository contents were originally organized around PySR and
-binary BSM exclusion modeling. In the new framing, PySR is the first symbolic-
-regression backend, not the project identity. Existing PySR/BSM exclusion
-work will be stabilized, reviewed, and generalized into a reproducible IDM
-symbolic-regression framework.
+The current repository contains a PySR-first binary exclusion workflow. PySR
+is the first symbolic-regression backend, not the project identity. The active
+work stabilizes that workflow through no-fit dial discovery, a reviewed
+configuration panel, and later one-dial-at-a-time improvement runs.
 
 The active modeled dataset id remains:
 
@@ -75,40 +74,26 @@ Main Workstream > Operon Probe > Native C++ > Native Rust
 
 ## Current Phase
 
-Current phase:
+Current authorized assignment:
 
 ```text
-Workstream I / Phase 1 - Data and Physics
+Workstream I / Phase 3 readiness - PySR dial discovery and baseline handoff
 ```
 
-Phase 0 - Repository Framing is explicitly accepted. The repository framing,
-two-workstream structure, PySR-first-backend boundary, and gated review workflow
-are accepted as the starting authority for subsequent phase work.
-
-Phase 1 is the current documentation and data-contract phase. It should record
-dataset contracts, physics assumptions, nested-sampling boundaries, labels,
-targets, units, preprocessing assumptions, and validation rules before PySR
-baseline stabilization or later backend comparison proceeds.
+This bounded assignment does not itself close earlier phase gates. It audits the
+current implementation, discovers preprocessing and execution switches without
+fitting, and prepares the Phase 3 baseline configuration for human acceptance.
 
 ## Current Scientific Status
 
-The repository has existing provisional PySR/ML BSM exclusion scaffolding. The
-current best approved-feature provisional result recorded before this framing
-work is:
-
-```text
-feature set / model: mass_engineered_v1 / hist_gradient_boosting_grid_01
-fixed split: stratified, random_seed = 42
-ROC-AUC: 0.9757422365348225
-```
-
-This ROC-AUC value was observed for the approved engineered-mass candidate on
-the fixed seed-42 stratified split. Robustness across repeated splits and
-cross-validation folds is not fully established.
+The current assignment performs no scientific fit and makes no performance
+claim. It produces only configuration, numerical-safety, leakage, environment,
+and reproducibility evidence for review. Existing ignored artifacts remain
+historical and are not promoted into the new baseline.
 
 No final thesis success, accepted physics interpretation, or accepted symbolic
-model result is claimed here. All model results and supervisor-facing claims
-remain provisional, unverified, and pending human/supervisor review.
+model result is claimed here. All future model results and supervisor-facing
+claims remain provisional, unverified, and pending human/supervisor review.
 
 ## Dataset and Feature Policy
 
@@ -143,21 +128,18 @@ Run definitions are organized through repository configs and scripts so that
 inputs, feature sets, target definitions, split rules, class-imbalance handling,
 metrics, and output paths can be reviewed and reproduced.
 
-Representative existing commands:
+Current commands:
 
 ```bash
 python scripts/audit_dataset.py --config configs/runs/masses_exclusions_audit.yaml
 python scripts/audit_dataset.py --config configs/runs/masses_exclusions2_audit.yaml
 python scripts/audit_dataset.py --config configs/runs/ht_audit.yaml
-python scripts/evaluate_strong_baselines.py --config configs/runs/masses_exclusions_strong_baselines.yaml
-python scripts/evaluate_robustness.py --config configs/runs/masses_exclusions_robustness.yaml
-python scripts/reproduce_auc97_candidate.py --config configs/runs/masses_exclusions_auc97_candidate.yaml
-python scripts/train_pysr_auc_search.py --config configs/runs/masses_exclusions_pysr_search.yaml --dry-run
+python scripts/discover_pysr_dials.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --live-operator-check
+python scripts/train_pysr_auc_search.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --dry-run
 ```
 
-The PySR command above is a dry run. The final symbolic search should remain
-blocked until the relevant dataset conventions, feature conventions,
-validation protocol, and robustness status have been reviewed.
+The discovery and dry-run commands do not fit PySR. A future symbolic search
+remains blocked until the discovery packet and baseline panel are accepted.
 
 Ignored generated outputs may exist locally under:
 

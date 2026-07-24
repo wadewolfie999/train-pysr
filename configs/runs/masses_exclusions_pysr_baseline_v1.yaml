@@ -1,0 +1,93 @@
+# Human-editable PySR run panel. Change named choices here before a run, then
+# validate with scripts/train_pysr_auc_search.py --config ... --dry-run.
+schema_version: 1
+registry: configs/pysr/switch_registry.yaml
+
+run:
+  run_id: masses_exclusions_pysr_baseline_v1
+  task_type: pysr_symbolic_score_search
+  review_status: provisional_unverified_pending_review
+
+dataset:
+  dataset_id: masses_exclusions
+  dataset_config: configs/datasets/masses_exclusions.yaml
+  raw_path: data/raw/masses_exclusions.csv
+  target: exclusion
+  positive_label: 1
+  forbidden_columns: [Final_CLs]
+
+split:
+  method: stratified
+  test_size: 0.2
+  random_seed: 42
+
+preprocessing:
+  # Choices are declared in configs/pysr/switch_registry.yaml.
+  feature_set: base
+  mode: raw
+  # Required only by dimensionless_reference and log_reference. Values are
+  # explicit computational probes, not reviewed physical scale claims.
+  reference_scales:
+    mchi1: 1000.0
+    mchipm1: 1000.0
+    mass_gap: 1000.0
+    mass_ratio: 1.0
+  review_acknowledgements: []
+
+training:
+  sample_weight_preset: balanced
+  manual_class_weights: null
+  loss_preset: weighted_squared_error
+
+metrics:
+  primary: roc_auc
+  secondary: average_precision
+  score_source: continuous_pysr_prediction
+
+operators:
+  binary_preset: polynomial
+  unary_preset: none
+  custom_preset: none
+  review_acknowledgements: []
+
+search:
+  model_selection: best
+  # Required when enabling a review-gated complexity setting. Use the exact
+  # registry id, for example search.complexity.constraints.
+  review_acknowledgements: []
+  complexity:
+    maxsize: 40
+    maxdepth: null
+    parsimony: 0.0
+    complexity_of_operators: null
+    constraints: null
+    nested_constraints: null
+  budget:
+    niterations: 100
+    populations: 20
+    population_size: 27
+    timeout_in_seconds: 7200
+  precision: 32
+  deterministic: true
+  warm_start: false
+
+runtime:
+  parallelism: serial
+  procs: null
+  julia_threads: 1
+  omp_threads: 1
+  mkl_threads: 1
+  openblas_threads: 1
+  python_juliacall_handle_signals: "yes"
+  python_unbuffered: true
+
+output:
+  output_dir: outputs/runs/masses_exclusions_pysr_baseline_v1/
+  policy_preset: preserved_run_local
+  require_clean_worktree: true
+  record_git_diff_status: true
+
+experiment:
+  parent_config: null
+  changed_dial: baseline
+  one_dial_policy: true

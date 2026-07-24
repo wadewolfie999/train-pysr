@@ -91,7 +91,7 @@ Main outputs:
 
 Exit conditions:
 
-- Existing PySR/ML BSM exclusion work is mapped into the new framework.
+- Existing PySR exclusion work is mapped into the new framework.
 - No source behavior changes are made without explicit authorization.
 - Triage identifies the minimum changes needed for PySR stabilization.
 
@@ -189,19 +189,20 @@ Exit conditions:
 
 ## Current Next Step
 
-Because Phase 0 is explicitly accepted, the current next phase is:
+The current A1-authorized assignment is:
 
 ```text
-Workstream I / Phase 1 - Data and Physics
+Workstream I / Phase 3 readiness - PySR dial discovery and baseline handoff
 ```
 
-Phase 1 should resolve or mark `TODO` for IDM terms, units, dataset provenance,
-target-label semantics, feature approval, validation protocol, baseline set,
-and audit-only dataset status.
+It performs a no-fit switch and leakage discovery, prepares a reviewed editable
+baseline panel, and returns an operator-acceptance candidate. It does not by
+itself close prior phase gates or authorize a scientific fit. Units,
+target-label semantics, derived-feature meaning, and physics-sensitive
+operators remain `TODO` or review-gated.
 
 ## Review Status
 
-This roadmap records Phase 0 - Repository Framing as explicitly accepted.
 Future phase outputs and scientific claims remain provisional until reviewed.
 
 It does not claim accepted scientific performance.

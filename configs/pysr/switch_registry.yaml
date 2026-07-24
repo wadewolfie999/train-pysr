@@ -1,0 +1,411 @@
+schema_version: 1
+registry_id: pysr_switch_registry_v1
+status: provisional_unverified_pending_review
+environment:
+  pysr: "1.5.10"
+  symbolic_regression: "1.11.3"
+  julia: "1.12.6"
+classification_schema:
+  availability:
+    - supported
+    - deferred
+  safety:
+    - safe
+    - unsafe
+    - requires_physics_review
+    - deferred
+  rule: >-
+    Every switch has one availability classification and one safety
+    classification. Unsafe and deferred switches are blocked by config
+    validation. Physics-review switches require an explicit acknowledgement.
+
+preprocessing:
+  modes:
+    raw:
+      availability: supported
+      safety: safe
+      default: true
+      fit_scope: none
+      description: Preserve input values exactly.
+    standard:
+      availability: supported
+      safety: safe
+      default: false
+      fit_scope: training_rows_only
+      description: Subtract the training mean and divide by the training population standard deviation.
+    robust:
+      availability: supported
+      safety: safe
+      default: false
+      fit_scope: training_rows_only
+      description: Subtract the training median and divide by the training interquartile range.
+    dimensionless_reference:
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      fit_scope: explicit_reference_scales
+      description: Divide every feature by a positive, explicitly recorded reference scale.
+    log1p:
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      fit_scope: domain_check_only
+      description: Apply natural log(1 + x) after requiring non-negative inputs.
+    log_reference:
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      fit_scope: explicit_reference_scales
+      description: Apply natural log(x/reference) after requiring positive inputs and scales.
+  feature_sets:
+    base:
+      columns: [mchi1, mchipm1]
+      availability: supported
+      safety: safe
+      default: true
+    base_plus_gap:
+      columns: [mchi1, mchipm1, mass_gap]
+      formulas:
+        mass_gap: mchipm1 - mchi1
+      availability: supported
+      safety: requires_physics_review
+      default: false
+    base_plus_ratio:
+      columns: [mchi1, mchipm1, mass_ratio]
+      formulas:
+        mass_ratio: mchipm1 / mchi1
+      availability: supported
+      safety: requires_physics_review
+      default: false
+    gap_only:
+      columns: [mass_gap]
+      formulas:
+        mass_gap: mchipm1 - mchi1
+      availability: supported
+      safety: requires_physics_review
+      default: false
+    ratio_only:
+      columns: [mass_ratio]
+      formulas:
+        mass_ratio: mchipm1 / mchi1
+      availability: supported
+      safety: requires_physics_review
+      default: false
+    gap_plus_ratio:
+      columns: [mass_gap, mass_ratio]
+      formulas:
+        mass_gap: mchipm1 - mchi1
+        mass_ratio: mchipm1 / mchi1
+      availability: supported
+      safety: requires_physics_review
+      default: false
+
+execution:
+  binary_operator_presets:
+    additive:
+      operators: ["+", "-"]
+      availability: supported
+      safety: safe
+      default: false
+    polynomial:
+      operators: ["+", "-", "*"]
+      availability: supported
+      safety: safe
+      default: true
+    rational:
+      operators: ["+", "-", "*", "/"]
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      risk: Evolved denominators can be zero or numerically small.
+    power:
+      operators: ["+", "-", "*", "^"]
+      availability: supported
+      safety: unsafe
+      default: false
+      risk: General powers can leave the real finite domain.
+  unary_operator_presets:
+    none:
+      operators: []
+      availability: supported
+      safety: safe
+      default: true
+    transcendental_candidates:
+      operators: [log, exp, tanh]
+      availability: supported
+      safety: unsafe
+      default: false
+      risk: log has a restricted domain and exp overflows on the observed raw mass range.
+    tanh_only:
+      operators: [tanh]
+      availability: supported
+      safety: safe
+      default: false
+    log_only:
+      operators: [log]
+      availability: supported
+      safety: requires_physics_review
+      default: false
+    exp_only:
+      operators: [exp]
+      availability: supported
+      safety: unsafe
+      default: false
+    periodic_candidates:
+      operators: [sin, cos]
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      risk: Periodicity has no reviewed physical interpretation for these features.
+    singular_high_risk_candidates:
+      operators: [inv, sqrt, tan, coth]
+      availability: supported
+      safety: unsafe
+      default: false
+      risk: Contains singularities or restricted real domains.
+  custom_operator_presets:
+    none:
+      unary_definitions: []
+      binary_definitions: []
+      availability: supported
+      safety: safe
+      default: true
+    square:
+      unary_definitions:
+        - "square(x) = x * x"
+      binary_definitions: []
+      sympy_mappings: [square]
+      availability: supported
+      safety: safe
+      default: false
+    guarded_division:
+      unary_definitions: []
+      binary_definitions:
+        - "guarded_div(x, y) = x / (abs(y) + 1.0e-12)"
+      sympy_mappings: [guarded_div]
+      availability: supported
+      safety: requires_physics_review
+      default: false
+      risk: The fixed epsilon has unresolved dimensional meaning.
+  sample_weight_presets:
+    none:
+      availability: supported
+      safety: safe
+      default: false
+    balanced:
+      availability: supported
+      safety: safe
+      default: true
+      implementation: sklearn.utils.class_weight.compute_sample_weight
+    manual_class_weights:
+      availability: supported
+      safety: requires_physics_review
+      default: false
+  loss_presets:
+    weighted_squared_error:
+      elementwise_loss: "loss(prediction, target, weight) = weight * (prediction - target)^2"
+      requires_sample_weights: true
+      availability: supported
+      safety: safe
+      default: true
+    unweighted_squared_error:
+      elementwise_loss: "loss(prediction, target) = (prediction - target)^2"
+      requires_sample_weights: false
+      availability: supported
+      safety: safe
+      default: false
+    weighted_absolute_error:
+      elementwise_loss: "loss(prediction, target, weight) = weight * abs(prediction - target)"
+      requires_sample_weights: true
+      availability: supported
+      safety: safe
+      default: false
+    unweighted_absolute_error:
+      elementwise_loss: "loss(prediction, target) = abs(prediction - target)"
+      requires_sample_weights: false
+      availability: supported
+      safety: safe
+      default: false
+    direct_auc:
+      availability: deferred
+      safety: deferred
+      default: false
+      reason: ROC-AUC is not an elementwise PySR loss in the current workflow.
+    binary_cross_entropy:
+      availability: deferred
+      safety: requires_physics_review
+      default: false
+      reason: A reviewed score-to-probability link and stable loss definition are not available.
+  model_selection:
+    best:
+      availability: supported
+      safety: safe
+      default: true
+    accuracy:
+      availability: supported
+      safety: safe
+      default: false
+    score:
+      availability: supported
+      safety: safe
+      default: false
+  complexity_dials:
+    maxsize:
+      availability: supported
+      safety: safe
+      default: 40
+      minimum: 2
+    maxdepth:
+      availability: supported
+      safety: safe
+      default: null
+      minimum: 1
+    parsimony:
+      availability: supported
+      safety: safe
+      default: 0.0
+      minimum: 0.0
+    complexity_of_operators:
+      availability: supported
+      safety: requires_physics_review
+      default: null
+    constraints:
+      availability: supported
+      safety: requires_physics_review
+      default: null
+    nested_constraints:
+      availability: supported
+      safety: requires_physics_review
+      default: null
+  budget_dials:
+    niterations:
+      availability: supported
+      safety: safe
+      default: 100
+      minimum: 1
+    populations:
+      availability: supported
+      safety: safe
+      default: 20
+      minimum: 1
+    population_size:
+      availability: supported
+      safety: safe
+      default: 27
+      minimum: 2
+    timeout_in_seconds:
+      availability: supported
+      safety: safe
+      default: 7200
+      minimum: 1
+  precision:
+    "16":
+      availability: supported
+      safety: unsafe
+      default: false
+      risk: Reduced dynamic range is unsuitable for the first baseline.
+    "32":
+      availability: supported
+      safety: safe
+      default: true
+    "64":
+      availability: supported
+      safety: safe
+      default: false
+  parallelism:
+    serial:
+      availability: supported
+      safety: safe
+      default: true
+    multithreading:
+      availability: supported
+      safety: deferred
+      default: false
+      reason: Scheduling and determinism cannot be validated without a separately authorized live fit.
+    multiprocessing:
+      availability: supported
+      safety: deferred
+      default: false
+      reason: Process lifecycle and artifact isolation need a separately authorized live test.
+  deterministic:
+    "true":
+      availability: supported
+      safety: safe
+      default: true
+      requires_parallelism: serial
+    "false":
+      availability: supported
+      safety: safe
+      default: false
+  warm_start:
+    "false":
+      availability: supported
+      safety: safe
+      default: true
+    "true":
+      availability: supported
+      safety: unsafe
+      default: false
+      risk: A fresh baseline must not inherit a prior search state.
+  runtime_threads:
+    availability: supported
+    safety: safe
+    default: 1
+    minimum: 1
+    environment_variables: [JULIA_NUM_THREADS, PYTHON_JULIACALL_THREADS]
+  output_policy_presets:
+    preserved_run_local:
+      availability: supported
+      safety: safe
+      default: true
+      settings:
+        allow_overwrite: false
+        temp_equation_file: false
+        delete_tempfiles: false
+        workspace_subdir: pysr_workspace
+        temp_subdir: pysr_temp
+      description: Preserve run-local workspace and temporary files for review.
+    cleaned_run_local:
+      availability: supported
+      safety: safe
+      default: false
+      settings:
+        allow_overwrite: false
+        temp_equation_file: false
+        delete_tempfiles: true
+        workspace_subdir: pysr_workspace
+        temp_subdir: pysr_temp
+      description: Keep final run artifacts but allow PySR to delete run-local temporary files.
+    external_temp:
+      availability: deferred
+      safety: deferred
+      default: false
+      reason: External temporary paths would weaken the repo-local evidence boundary.
+    overwrite_existing:
+      availability: supported
+      safety: unsafe
+      default: false
+      reason: Existing run evidence must never be overwritten.
+
+recommended_baseline:
+  preprocessing_mode: raw
+  feature_set: base
+  binary_operator_preset: polynomial
+  unary_operator_preset: none
+  custom_operator_preset: none
+  sample_weight_preset: balanced
+  loss_preset: weighted_squared_error
+  model_selection: best
+  maxsize: 40
+  maxdepth: null
+  parsimony: 0.0
+  niterations: 100
+  populations: 20
+  population_size: 27
+  timeout_in_seconds: 7200
+  precision: 32
+  parallelism: serial
+  deterministic: true
+  warm_start: false
+  runtime_threads: 1
+  output_policy_preset: preserved_run_local
