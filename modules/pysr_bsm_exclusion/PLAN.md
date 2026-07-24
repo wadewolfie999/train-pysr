@@ -1,65 +1,48 @@
-# Research Plan
+# PySR Exclusion Baseline Plan
 
 ## Objective
 
-Develop a reviewed, reproducible comparison between PySR symbolic-regression models and standard machine-learning baselines for binary BSM exclusion classification.
+Stabilize a reviewed, reproducible PySR continuous-score workflow for the
+`masses_exclusions` binary exclusion dataset. PySR remains the first backend in
+the broader IDM symbolic-regression framework.
 
-## Inputs
+## Current Inputs
 
-- Module id: `pysr_bsm_exclusion`
-- First dataset id: `masses_exclusions`
-- Dataset registry: `configs/datasets/masses_exclusions.yaml`
+- Dataset config: `configs/datasets/masses_exclusions.yaml`
 - Raw dataset: `data/raw/masses_exclusions.csv`
-- Default features: `mchi1`, `mchipm1`
-- Target: binary `exclusion`
+- Base features: `mchi1`, `mchipm1`
+- Target: `exclusion`
+- Forbidden field: `Final_CLs`
+- Editable baseline panel:
+  `configs/runs/masses_exclusions_pysr_baseline_v1.yaml`
+- Switch registry: `configs/pysr/switch_registry.yaml`
 
-## Planned Outputs
+## Current Work
 
-- Reviewed run configurations.
-- PySR model outputs and recorded expressions.
-- Standard ML baseline outputs.
-- ROC/AUC evaluation reports.
-- Secondary threshold-dependent metric reports when approved.
-- Run logs with reproducibility metadata.
+- Classify preprocessing and PySR execution switches.
+- Test transformation leakage and numerical domains without fitting PySR.
+- Recommend conservative defaults with no unary operators.
+- Prepare a new, non-overwriting run identity and output directory.
+- Preserve saved continuous test labels/scores for independent metric checking.
 
 ## Evaluation Protocol
 
-ROC/AUC must be computed from continuous model scores, not hard class labels.
+ROC-AUC is the primary metric and average precision is the secondary metric.
+Both use continuous PySR scores. A future integrity command will recompute both
+metrics from saved test artifacts without performing another fit.
 
-Accuracy and confusion matrices may be reported only as threshold-dependent secondary metrics.
+## Boundaries
 
-AUC > 0.97 is a target, not an achieved result unless produced by an actual reviewed run.
+- No scientific fit occurs during dial discovery.
+- Raw data and prior outputs are never overwritten.
+- Derived features and physics-sensitive operators remain review-gated.
+- Scientific conclusions and model-performance claims require thesis-author
+  review.
 
-## PySR Track
+## TODOs
 
-- Use the reviewed dataset registry and run configuration.
-- Use only approved features and target definitions.
-- Record expression, score source, seed, split, metrics, and output path.
-- Allow PySR expressions to grow if AUC improves, because expression simplicity is not the initial hard constraint.
+- TODO: Confirm mass units.
+- TODO: Confirm physical positive-label semantics.
+- TODO: Obtain operator acceptance before the first fresh baseline fit.
 
-## ML Baseline Track
-
-Standard ML baselines should use the same dataset split, features, target, and metric protocol as PySR.
-
-Baseline choices require review before supervisor-facing comparison.
-
-## Reproducibility Requirements
-
-- Class imbalance handling must be declared per run.
-- Run config, seed, dataset version/path, feature set, target, metrics, and output path must be recorded.
-- Raw data must remain unchanged.
-- Prior generated outputs must not be overwritten.
-
-## Acceptance Criteria
-
-No result is accepted unless the run config, seed, dataset version/path, feature set, target, metrics, and output path are recorded.
-
-Scientific conclusions, physics interpretations, citation claims, and model-performance claims require thesis-author review.
-
-## Immediate Next Steps
-
-- Review this module scaffold.
-- Resolve required open questions for units, labels, validation protocol, and baseline set.
-- Define reviewed run configuration files before implementing scripts.
-
-This plan is provisional, unverified, and pending review.
+Status: provisional, unverified, and pending review.

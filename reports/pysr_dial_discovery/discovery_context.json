@@ -1,0 +1,212 @@
+{
+  "command": "scripts/discover_pysr_dials.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --report-dir reports/pysr_dial_discovery --live-operator-check",
+  "config": "configs/runs/masses_exclusions_pysr_baseline_v1.yaml",
+  "config_sha256": "cc093d93f88809d0cd72f466280fd074eca22078ad0939144ab34c2c4aa21e12",
+  "dataset": "data/raw/masses_exclusions.csv",
+  "dataset_sha256": "c8c8063c84a10143b6369f444a037ef5695ff13f5eef6f9bf00dc86880c3937a",
+  "environment": {
+    "julia": "1.12.6",
+    "juliacall": "0.9.26",
+    "numpy": "2.4.2",
+    "pandas": "3.0.0",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "pysr": "1.5.10",
+    "python": "3.11.14 (main, Feb 12 2026, 00:42:48) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "python_executable": "/Users/vaheedgorgeen/.pyenv/versions/3.11.14/bin/python",
+    "scikit_learn": "1.8.0",
+    "symbolic_regression": "1.11.3",
+    "timestamp_utc": "2026-07-24T16:49:36.500351+00:00"
+  },
+  "fit_call_count": 0,
+  "no_fit": true,
+  "registry": "configs/pysr/switch_registry.yaml",
+  "registry_validation": {
+    "classified_option_count": 63,
+    "registry_id": "pysr_switch_registry_v1",
+    "schema_version": 1,
+    "status": "provisional, unverified, pending review"
+  },
+  "repository": {
+    "branch": "codex/stability-campaign",
+    "external_historical_workspace_accessed": false,
+    "external_historical_workspace_required": false,
+    "head": "5fa908f0e8049416642ec690748b88376a1e249b",
+    "implementation_sha256": {
+      "configs/pysr/switch_registry.yaml": "411f864b697ac19535a76a4857f0441417c0c079ed3111a53bdd900e810c56de",
+      "configs/runs/masses_exclusions_pysr_baseline_v1.yaml": "cc093d93f88809d0cd72f466280fd074eca22078ad0939144ab34c2c4aa21e12",
+      "scripts/discover_pysr_dials.py": "c1fc029384b1d58c896c965cb2faa5df6720ec422178a445576e8b54d3811009",
+      "scripts/pysr_dials.py": "073a2f4ba6105687e2be0543f00a0884a11cad351ced4714677fd4fcb792b013",
+      "scripts/train_pysr_auc_search.py": "5b58c9e94186c6f9659840510cc9c25e413ed37fc757f4cb42768146eb9a8175",
+      "scripts/validate_pysr_run.py": "cff188f31ccf9bfb52c9b5bc44a4cc6aca96724c224472e1fa59ba3875ed65e8"
+    },
+    "implementation_surfaces": [
+      "scripts/train_pysr_auc_search.py",
+      "scripts/validate_pysr_run.py",
+      "scripts/discover_pysr_dials.py",
+      "scripts/pysr_dials.py",
+      "configs/pysr/switch_registry.yaml",
+      "configs/runs/masses_exclusions_pysr_baseline_v1.yaml"
+    ],
+    "pysr_artifact_directories": [
+      {
+        "file_count": 4,
+        "historical_core_complete": false,
+        "path": "outputs/runs/masses_exclusions_pysr_smoke_v1",
+        "preservation_policy": "inspect_only_do_not_overwrite"
+      },
+      {
+        "file_count": 4,
+        "historical_core_complete": false,
+        "path": "outputs/runs/masses_exclusions_pysr_smoke_v2",
+        "preservation_policy": "inspect_only_do_not_overwrite"
+      },
+      {
+        "file_count": 5,
+        "historical_core_complete": false,
+        "path": "outputs/runs/masses_exclusions_pysr_smoke_v3",
+        "preservation_policy": "inspect_only_do_not_overwrite"
+      },
+      {
+        "file_count": 15,
+        "historical_core_complete": true,
+        "path": "outputs/runs/masses_exclusions_pysr_smoke_v4",
+        "preservation_policy": "inspect_only_do_not_overwrite"
+      }
+    ],
+    "repository_root": "/Users/vaheedgorgeen/SR-Workspace/train-pysr",
+    "status_short": [
+      "M PLANS.md",
+      " M README.md",
+      " M configs/runs/README.md",
+      " M configs/runs/masses_exclusions_pysr_search.yaml",
+      " M configs/runs/masses_exclusions_pysr_smoke.yaml",
+      " M docs/ROADMAP_IDM_SYMBOLIC_REGRESSION.md",
+      " M modules/pysr_bsm_exclusion/PLAN.md",
+      " M modules/pysr_bsm_exclusion/QUESTIONS.md",
+      " M modules/pysr_bsm_exclusion/README.md",
+      " M scripts/train_pysr_auc_search.py",
+      " M scripts/validate_pysr_run.py",
+      "?? configs/pysr/switch_registry.yaml",
+      "?? configs/runs/masses_exclusions_pysr_baseline_v1.yaml",
+      "?? reports/pysr_dial_discovery/PySR_BASELINE_CONFIGURATION.md",
+      "?? reports/pysr_dial_discovery/dial_sheet.md",
+      "?? reports/pysr_dial_discovery/discovery_context.json",
+      "?? reports/pysr_dial_discovery/preprocessing_leakage_results.json",
+      "?? reports/pysr_dial_discovery/preprocessing_safety_results.json",
+      "?? reports/pysr_dial_discovery/supported_unsafe_options.md",
+      "?? reports/pysr_dial_discovery/switch_registry_snapshot.json",
+      "?? reports/pysr_dial_discovery/synthetic_domain_safety_results.json",
+      "?? scripts/discover_pysr_dials.py",
+      "?? scripts/pysr_dials.py",
+      "?? tests/test_pysr_dials.py",
+      "?? tests/test_validate_pysr_run.py"
+    ]
+  },
+  "resolved_baseline": {
+    "base_features": [
+      "mchi1",
+      "mchipm1"
+    ],
+    "config_path": "configs/runs/masses_exclusions_pysr_baseline_v1.yaml",
+    "custom_sympy_mappings": [],
+    "dataset_config": "configs/datasets/masses_exclusions.yaml",
+    "dataset_id": "masses_exclusions",
+    "experiment": {
+      "changed_dial": "baseline",
+      "one_dial_policy": true,
+      "parent_config": null
+    },
+    "forbidden_columns": [
+      "Final_CLs"
+    ],
+    "legacy_config_translated": false,
+    "loss_preset": "weighted_squared_error",
+    "manual_class_weights": null,
+    "metrics": {
+      "primary": "roc_auc",
+      "score_source": "continuous_pysr_prediction",
+      "secondary": "average_precision"
+    },
+    "model_features": [
+      "mchi1",
+      "mchipm1"
+    ],
+    "operator_presets": {
+      "binary": "polynomial",
+      "custom": "none",
+      "unary": "none"
+    },
+    "output": {
+      "allow_overwrite": false,
+      "delete_tempfiles": false,
+      "output_dir": "outputs/runs/masses_exclusions_pysr_baseline_v1/",
+      "policy_preset": "preserved_run_local",
+      "record_git_diff_status": true,
+      "require_clean_worktree": true,
+      "temp_equation_file": false,
+      "temp_subdir": "pysr_temp",
+      "workspace_subdir": "pysr_workspace"
+    },
+    "positive_label": 1,
+    "preprocessing": {
+      "feature_set": "base",
+      "mode": "raw",
+      "reference_scales": {
+        "mass_gap": 1000.0,
+        "mass_ratio": 1.0,
+        "mchi1": 1000.0,
+        "mchipm1": 1000.0
+      }
+    },
+    "pysr_options": {
+      "binary_operators": [
+        "+",
+        "-",
+        "*"
+      ],
+      "complexity_of_operators": null,
+      "constraints": null,
+      "delete_tempfiles": false,
+      "deterministic": true,
+      "elementwise_loss": "loss(prediction, target, weight) = weight * (prediction - target)^2",
+      "maxdepth": null,
+      "maxsize": 40,
+      "model_selection": "best",
+      "nested_constraints": null,
+      "niterations": 100,
+      "parallelism": "serial",
+      "parsimony": 0.0,
+      "population_size": 27,
+      "populations": 20,
+      "precision": 32,
+      "procs": null,
+      "temp_equation_file": false,
+      "timeout_in_seconds": 7200.0,
+      "unary_operators": [],
+      "warm_start": false
+    },
+    "random_seed": 42,
+    "raw_path": "data/raw/masses_exclusions.csv",
+    "registry_path": "configs/pysr/switch_registry.yaml",
+    "review_status": "provisional_unverified_pending_review",
+    "run_id": "masses_exclusions_pysr_baseline_v1",
+    "runtime": {
+      "julia_threads": 1,
+      "mkl_threads": 1,
+      "omp_threads": 1,
+      "openblas_threads": 1,
+      "parallelism": "serial",
+      "procs": null,
+      "python_juliacall_handle_signals": "yes",
+      "python_unbuffered": true
+    },
+    "sample_weight_preset": "balanced",
+    "schema_version": 1,
+    "split_method": "stratified",
+    "status": "provisional, unverified, pending review",
+    "target": "exclusion",
+    "task_type": "pysr_symbolic_score_search",
+    "test_size": 0.2
+  },
+  "status": "provisional, unverified, pending review"
+}

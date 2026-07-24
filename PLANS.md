@@ -1,84 +1,81 @@
-# Plans
+# PySR Baseline Stabilization Plan
 
-This file is a repository-local synchronization of the controlling SR-Res
-governance and scientific records. Updating it does not independently ratify,
-amend, supersede, close, or LOCK any decision. A1 review remains required.
+This file is a repository-local synchronization of the current A1-authorized
+technical direction. It does not independently approve scientific conclusions,
+physics interpretations, phase gates, or model results. Human review remains
+required.
 
-## Locked Scientific Sequence
+## Current Authorized Sequence
 
-The exact nine-act scientific sequence is:
+1. Audit the current `train-pysr` repository, environment, configs, and local
+   PySR artifacts.
+2. Discover and classify preprocessing and PySR execution switches without
+   performing a scientific fit.
+3. Validate split-first, training-only preprocessing and operator-domain safety.
+4. Produce a human-editable baseline panel and complete configuration handoff.
+5. Record operator acceptance of the discovery evidence and proposed defaults.
+6. Run one separately authorized fresh baseline fit.
+7. Recompute ROC-AUC and average precision independently from saved continuous
+   test scores.
+8. Improve PySR through new, non-overwriting, one-dial-at-a-time runs.
 
-1. Define the exact scientific claim.
-2. Audit existing PySR evidence.
-3. Lock the validation protocol.
-4. Reproduce the current `>0.97` result.
-5. Run the stability campaign.
-6. Verify and select the reportable result.
-7. Freeze the evidence package.
-8. Build the professor-facing `.ipynb`.
-9. Perform adversarial review and final sign-off.
+Steps 1 through 5 were accepted and integrated by the operator. This acceptance
+establishes technical readiness only: step 6 remains separately unauthorized,
+and the repository must still stop before any call to `PySRRegressor.fit`.
 
-The sequence is ordered and non-substitutable. The current claim is the
-A1-controlled PySR claim defined for the specified pMSSM benchmark. No
-scientific acceptance may be inferred from files under `SR-Res-work`.
+## Baseline Configuration Candidate
 
-## Latest A1-Authorized State
+- Dataset: `masses_exclusions`
+- Raw path: `data/raw/masses_exclusions.csv`
+- Base features: `mchi1`, `mchipm1`
+- Target: binary `exclusion`
+- Configured positive label: `1`
+- Forbidden field: `Final_CLs`
+- Split: stratified 80/20, seed 42
+- Preprocessing: raw base features
+- Class handling: balanced sample weights computed on training labels only
+- Fit loss: weighted squared-error continuous-score surrogate
+- Primary metric: ROC-AUC from continuous scores
+- Secondary metric: average precision from continuous scores
+- Binary operators: `+`, `-`, `*`
+- Unary and custom operators: none
+- Runtime: serial, deterministic, one Julia/JuliaCall thread
+- Warm start: disabled
+- Output: new run identity and non-overwriting run-local directories
 
-| Act | Locked sequence item | Current state and boundary |
-| --- | --- | --- |
-| 1 | Define the exact scientific claim | `FINISHED — A1 LOCKED`. The claim definition and paired two-feature/three-feature arm decision are controlling records. |
-| 2 | Audit existing PySR evidence | `CLOSED BY A1`. The A1-ratified calibration did not reopen the act; no claim-bearing PySR stability evidence was found, and historical unrecovered artifacts remain unverifiable and quarantined. |
-| 3 | Lock the validation protocol | `A1 APPROVED AND LOCKED — CLOSED`. `SRRES-VP-1.0.0` is the locked protocol, with the recorded limitation concerning currently unknown grouping information. |
-| 4 | Reproduce the current `>0.97` result | `COMPLETED — BOUNDED DIAGNOSTIC REPRODUCTION OBSERVED — EXACT EQUALITY FALSE — STABILITY NOT ESTABLISHED`. The accepted outputs are standard-ML, non-PySR, non-claim-bearing, and quarantined. |
-| 5 | Run the stability campaign | The historical campaign is `CAMPAIGN_FAILED — NON-ADJUDICABLE — NO SCIENTIFIC VERDICT`. It is frozen; its opportunity under `SRRES-VP-1.0.0` was consumed and must not be retried, repaired, replaced, or promoted as evidence. |
-| 6 | Verify and select the reportable result | `PENDING — UNAUTHORIZED UNTIL REACHED`. No result may be selected or scientifically adjudicated from the failed historical campaign. |
-| 7 | Freeze the evidence package | `PENDING — UNAUTHORIZED UNTIL REACHED`. No evidence package may be frozen from the failed campaign or from unactivated replacement work. |
-| 8 | Build the professor-facing `.ipynb` | `PENDING — UNAUTHORIZED UNTIL REACHED`. Notebook work must wait for a valid frozen evidence package. |
-| 9 | Perform adversarial review and final sign-off | `PENDING — UNAUTHORIZED UNTIL REACHED`. Final sign-off remains an A1 decision. |
+These defaults are accepted as the technical baseline configuration. This does
+not accept a scientific conclusion, physics interpretation, or model result.
 
-## Act 5 Recovery Boundary
+## Dial Discovery Requirements
 
-A1 approved `SRRES-VP-1.0.1` only as a limited protocol amendment. It:
+The registry and editable panel must cover raw, standard, robust,
+reference-scaled, log, mass-gap, and mass-ratio preprocessing; operators, loss,
+weights, selection, complexity, budget, precision, parallelism, determinism,
+warm start, threads, and output policy.
 
-- freezes the historical Act 5 campaign as failed and non-adjudicable;
-- permits preparation for exactly one fresh replacement campaign;
-- changes no dataset, feature, target, split, seed, search space, budget,
-  selection rule, metric, bootstrap, threshold, or scientific acceptance
-  criterion;
-- prohibits historical Act 5 outputs from serving as evidence for replacement
-  work; and
-- requires a new run identity, new directories, fresh splits, a fresh offline
-  environment, a clean detached checkout, and a separate final A1 execution
-  activation.
+Every option records availability and safety independently. Unsafe and deferred
+choices are blocked. Physics-review choices require an explicit acknowledgement.
+No unary operator is enabled by default.
 
-This amendment does not authorize the replacement campaign. The only currently
-authorized functional work is the bounded no-fit remediation described by A1:
-prepare a fresh copy and apply the exact runner correction from
-`temp_equation_file=True` to `temp_equation_file=False`, then perform the
-specified no-fit checks and return the remediation evidence for A1 review.
+## Reproducibility and Integrity
 
-Replacement fitting, symbolic search, metric production, outer-test access,
-scientific Act 5 execution, and evidence adjudication remain unauthorized
-unless a newer explicit A1 activation record exists. Stop before every call to
-`fit`.
+- Split rows before deriving or fitting any transformation.
+- Fit transformation statistics on training rows only and freeze them for test
+  rows.
+- Reject non-finite inputs and outputs.
+- Save exact transformation metadata, config identity, dataset identity, seed,
+  features, target, operators, loss, runtime settings, and output paths.
+- Never overwrite raw data, existing run artifacts, or previous run directories.
+- Independently validate saved labels and continuous scores after a future fit;
+  this validation is not a second fit.
 
-## Scope Outside the Current Sequence
+## Review-Sensitive TODOs
 
-IDM application, `Ht.csv`, SymbolFit integration, expression-error work, and
-broader backend exploration are post-current or separately governed scope.
-They must not be presented as substitutes for the controlling nine-act
-campaign. PySR is the first backend for this sequence, not the full project
-identity.
+- TODO: Confirm physical units for `mchi1` and `mchipm1`.
+- TODO: Confirm the physical meaning of `exclusion` values 0 and 1.
+- TODO: Review any physical interpretation of mass gaps, mass ratios, periodic
+  functions, singular functions, or reference scales before enabling them.
+- TODO: Obtain separate A1 authorization before launching the fresh baseline fit.
 
-No dataset registration, feature set, target definition, unit convention,
-preprocessing rule, split rule, metric protocol, or class-imbalance strategy
-may be changed through this plan. Unknown or unresolved scientific details
-remain `TODO` or are escalated to A1.
-
-## Operating Rule
-
-Every future execution in `train-pysr` requires the self-contained,
-task-specific A1 authorization described in `AGENTS.md`. Existing evidence,
-dirty work, failed runs, timed-out attempts, and historical outputs must be
-preserved. These synchronized documents are review-ready operating records,
-not final acceptance or execution authority.
+All discovery results, defaults, future expressions, and future metrics remain
+provisional, unverified, and pending human review.
