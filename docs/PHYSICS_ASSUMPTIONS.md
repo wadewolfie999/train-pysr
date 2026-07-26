@@ -8,10 +8,11 @@ scientific assumptions that still require human or supervisor review.
 
 ## Current Status
 
-Phase 0 - Repository Framing is explicitly accepted. The physics content in
-this document is provisional, unverified, and pending review. It does not claim
-final IDM conventions, final viability semantics, final exclusion semantics, or
-supervisor approval.
+The current project phase is `REBUILD`. Earlier phase-acceptance statements
+are historical and non-controlling. The physics content in this document is
+provisional, unverified, and pending review. It does not claim final IDM
+conventions, final viability semantics, final exclusion semantics, or A1
+acceptance.
 
 ## IDM Scope
 
@@ -24,11 +25,11 @@ model, physical constraints, dataset provenance, or thesis conclusions.
 
 | Item | Confirmed repository statement | Source class |
 |---|---|---|
-| Project identity | IDM symbolic-regression research framework | Accepted Phase 0 docs |
-| Backend boundary | PySR is the first symbolic-regression backend, not the full project identity | Accepted Phase 0 docs |
-| Workstream priority | Workstream I is thesis-critical; Workstream II is exploratory and non-blocking | Accepted Phase 0 docs |
-| Nested-sampling boundary | Nested sampling is upstream data generation or preprocessing, not symbolic regression | Accepted Phase 0 docs |
-| Scientific authority | The thesis author and supervisor remain the review authority for scientific meaning | Authority docs |
+| Project identity | IDM symbolic-regression research framework | Historical Phase 0 docs; pending REBUILD review |
+| Backend boundary | PySR is the first symbolic-regression backend, not the full project identity | Historical Phase 0 docs; pending REBUILD review |
+| Workstream priority | Workstream I is thesis-critical; Workstream II is exploratory and non-blocking | Historical Phase 0 docs; pending REBUILD review |
+| Nested-sampling boundary | Nested sampling is upstream data generation or preprocessing, not symbolic regression | Historical Phase 0 docs; pending REBUILD review |
+| Scientific authority | A1 alone accepts internal scientific meaning; E1 guidance enters through A1 interpretation or adoption | Current authority context |
 
 ## Assumptions Requiring Supervisor Confirmation
 
@@ -112,11 +113,12 @@ contracts rather than redefining them silently.
 
 ## Relationship To Neural-Network Comparison
 
-The repository anticipates later neural-network comparison work, but final
-comparison metrics and reporting rules are TODO. Neural-network comparison must
-use the same reviewed dataset, feature, target, split, metric, and
-class-imbalance definitions as the symbolic-regression workflow unless a
-reviewed exception is recorded.
+Khosravi is another master's student supervised by E1 and forms the parallel
+Neural-Network comparison arm. Any SR-versus-NN comparison must be prospective,
+fair, and multi-metric, using common datasets, splits, metrics, uncertainty
+reporting, computational-budget treatment, and comparison criteria unless A1
+adopts a documented exception before result inspection. No post-result metric
+selection or optimization against unknown test outcomes is authorized.
 
 ## Review Checklist
 

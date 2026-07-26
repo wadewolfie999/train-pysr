@@ -5,12 +5,16 @@
 This repository supports a thesis-oriented research workflow for symbolic
 regression on Inert Doublet Model (IDM) dataset analysis.
 
-The current repository contains a PySR-first binary exclusion workflow. PySR
-is the first symbolic-regression backend, not the project identity. The active
-work stabilizes that workflow through no-fit dial discovery, a reviewed
-configuration panel, and later one-dial-at-a-time improvement runs.
+The current project phase is `REBUILD`. Scientific Acts 1–9 and their
+results are preserved as `DEPRECATED_HISTORICAL_SOURCE` and are not current
+authority unless A1 separately re-ratifies an exact provision.
 
-The active modeled dataset id remains:
+The repository contains a pre-REBUILD PySR-first binary exclusion workflow.
+PySR remains the first symbolic-regression backend, not the project identity,
+but no fit, search, metric production, or model execution is currently
+authorized by the existence of that workflow.
+
+The pre-REBUILD dataset registry records:
 
 ```text
 masses_exclusions
@@ -29,7 +33,9 @@ Additional professor-provided raw datasets are currently in audit-only intake:
 - `ht`: separate likelihood/parameter-style dataset with no assigned modeling
   target.
 
-These intake datasets are not approved for modeling yet.
+These intake datasets are not approved for modeling. Source-domain pMSSM
+evidence must remain distinct from target-domain IDM evidence and from the
+scientific validity or modeling status of `Ht.csv`.
 
 ## Research Framing
 
@@ -51,6 +57,14 @@ The repository should separate:
 
 Nested-sampling output, where relevant, is treated as upstream data generation
 or preprocessing evidence, not as the symbolic-regression model itself.
+
+Khosravi is another master's student supervised by E1 and provides the parallel
+Neural-Network comparison arm in E1's broader SR-versus-NN framework. Any future
+comparison must be prospectively specified, fair, and multi-metric, with common
+datasets, splits, uncertainty reporting, computational-budget treatment, and
+comparison criteria. No result transfers into SR-Res without a
+provenance-preserving handoff; no method may be optimized against unknown test
+outcomes or evaluated using metrics selected after observing results.
 
 ## Workstreams
 
@@ -74,22 +88,19 @@ Main Workstream > Operon Probe > Native C++ > Native Rust
 
 ## Current Phase
 
-Current authorized assignment:
-
 ```text
-Workstream I / Phase 3 readiness - PySR dial discovery and baseline handoff
+REBUILD
 ```
 
-This bounded assignment does not itself close earlier phase gates. It audits the
-current implementation, discovers preprocessing and execution switches without
-fitting, and prepares the Phase 3 baseline configuration for human acceptance.
+No pre-REBUILD phase assignment, acceptance statement, configuration, command,
+or artifact supplies current execution or scientific authority. New work
+requires an exact A1-approved REBUILD contract.
 
 ## Current Scientific Status
 
-The current assignment performs no scientific fit and makes no performance
-claim. It produces only configuration, numerical-safety, leakage, environment,
-and reproducibility evidence for review. Existing ignored artifacts remain
-historical and are not promoted into the new baseline.
+Existing configs, reports, notebooks, logs, ignored outputs, and review-copy
+scripts are preserved historical or provisional material. They are not promoted
+into the REBUILD baseline or accepted as current evidence by this document.
 
 No final thesis success, accepted physics interpretation, or accepted symbolic
 model result is claimed here. All future model results and supervisor-facing
@@ -97,7 +108,8 @@ claims remain provisional, unverified, and pending human/supervisor review.
 
 ## Dataset and Feature Policy
 
-The approved base features currently recorded for `masses_exclusions` are:
+The pre-REBUILD registry records the following default candidate features for
+`masses_exclusions`; they are not re-ratified by this README:
 
 ```text
 mchi1
@@ -128,7 +140,7 @@ Run definitions are organized through repository configs and scripts so that
 inputs, feature sets, target definitions, split rules, class-imbalance handling,
 metrics, and output paths can be reviewed and reproduced.
 
-Current commands:
+Historical reproducibility command examples, not current execution authority:
 
 ```bash
 python scripts/audit_dataset.py --config configs/runs/masses_exclusions_audit.yaml
@@ -138,8 +150,9 @@ python scripts/discover_pysr_dials.py --config configs/runs/masses_exclusions_py
 python scripts/train_pysr_auc_search.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --dry-run
 ```
 
-The discovery and dry-run commands do not fit PySR. A future symbolic search
-remains blocked until the discovery packet and baseline panel are accepted.
+These commands are documentation only during REBUILD. Every fit, symbolic
+search, metric-production run, or notebook execution remains blocked unless an
+exact A1-approved contract authorizes it.
 
 Ignored generated outputs may exist locally under:
 
@@ -183,6 +196,6 @@ include documentation, script scaffolding, configuration organization,
 verification checks, Git-tracked checkpoints, and implementation review within
 the repository workflow.
 
-Codex is not a scientific authority. All model results, physics
-interpretations, dataset conventions, and supervisor-facing claims remain
-provisional until reviewed and accepted by the thesis author and supervisor.
+Codex/A4 is not a scientific authority. Technical validation is not scientific
+acceptance. A1, Vahid Gorgin, alone records internal acceptance; E1 guidance
+gains internal effect only through A1 interpretation or adoption.

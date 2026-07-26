@@ -5,11 +5,15 @@ symbolic-regression research.
 
 ## Roles
 
-- The thesis author is the final scientific authority.
-- ChatGPT may support scientific reasoning and review.
-- Codex implements repository-side changes and reproducibility support.
+- A1, Vahid Gorgin, is the sole internal decision and scientific-acceptance
+  authority.
+- A2 provides advisory scientific reasoning, audit, and review only.
+- A4 implements bounded `train-pysr` changes and produces technical evidence
+  only under an exact A1-approved contract.
+- E1 guidance gains internal effect only through A1 interpretation or adoption.
 
-Codex does not decide scientific acceptance. Codex-generated derivations,
+A4 is not A2 and does not decide scientific acceptance. Codex-generated
+derivations,
 calculations, citations, conventions, model results, equations, and physics
 claims are provisional, unverified, and pending review.
 
@@ -102,14 +106,9 @@ fix/<specific-issue-summary>
 review/<review-or-audit-summary>
 ```
 
-For the current phase, the recommended branch name is:
-
-```text
-docs/workstream-i-phase-1-data-and-physics
-```
-
-Phase 0 - Repository Framing is explicitly accepted. Phase 1 work should use
-the accepted Phase 0 authority docs as its starting point.
+The current phase is `REBUILD`. Historical branch recommendations and phase
+acceptance records do not authorize work. A new branch or implementation task
+requires an exact A1-approved contract.
 
 Commit messages should be concise and scoped to the reviewed change. Codex must
 not stage, commit, push, merge, or open a pull request unless explicitly

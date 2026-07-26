@@ -1,12 +1,17 @@
 # PySR Exclusion Baseline Plan
 
+Status: **HISTORICAL PLAN — NON-CONTROLLING DURING REBUILD**
+
+This plan preserves pre-REBUILD technical intent. Its inputs, work items,
+metrics, and TODOs are not current execution requirements or accepted evidence.
+
 ## Objective
 
 Stabilize a reviewed, reproducible PySR continuous-score workflow for the
 `masses_exclusions` binary exclusion dataset. PySR remains the first backend in
 the broader IDM symbolic-regression framework.
 
-## Current Inputs
+## Historical Inputs
 
 - Dataset config: `configs/datasets/masses_exclusions.yaml`
 - Raw dataset: `data/raw/masses_exclusions.csv`
@@ -17,7 +22,7 @@ the broader IDM symbolic-regression framework.
   `configs/runs/masses_exclusions_pysr_baseline_v1.yaml`
 - Switch registry: `configs/pysr/switch_registry.yaml`
 
-## Current Work
+## Historical Work
 
 - Classify preprocessing and PySR execution switches.
 - Test transformation leakage and numerical domains without fitting PySR.
@@ -43,6 +48,7 @@ metrics from saved test artifacts without performing another fit.
 
 - TODO: Confirm mass units.
 - TODO: Confirm physical positive-label semantics.
-- TODO: Obtain operator acceptance before the first fresh baseline fit.
+- TODO: Obtain an exact A1-approved REBUILD contract before any fresh baseline
+  fit.
 
 Status: provisional, unverified, and pending review.

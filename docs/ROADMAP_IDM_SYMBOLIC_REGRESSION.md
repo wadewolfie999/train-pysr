@@ -1,9 +1,14 @@
 # Roadmap: IDM Symbolic Regression
 
+Status: **HISTORICAL PLANNING SOURCE — NON-CONTROLLING DURING REBUILD**
+
+This roadmap preserves the pre-REBUILD workstream sequence. Its phase statuses,
+acceptance statements, and next-step language do not authorize current work.
+
 ## Purpose
 
-This is the canonical roadmap for reframing the repository as an IDM symbolic-
-regression research framework.
+This was the pre-REBUILD roadmap for reframing the repository as an IDM
+symbolic-regression research framework.
 
 The roadmap has two workstreams:
 
@@ -187,17 +192,18 @@ Exit conditions:
   reasons.
 - Workstream I remains unblocked.
 
-## Current Next Step
+## Historical Next Step
 
-The current A1-authorized assignment is:
+The pre-REBUILD record identified this assignment:
 
 ```text
 Workstream I / Phase 3 readiness - PySR dial discovery and baseline handoff
 ```
 
-It performs a no-fit switch and leakage discovery, prepares a reviewed editable
-baseline panel, and returns an operator-acceptance candidate. It does not by
-itself close prior phase gates or authorize a scientific fit. Units,
+That historical assignment described no-fit switch and leakage discovery, an
+editable baseline panel, and an operator-review candidate. It is not current
+authority, does not close a phase gate, and does not authorize a scientific fit.
+Units,
 target-label semantics, derived-feature meaning, and physics-sensitive
 operators remain `TODO` or review-gated.
 

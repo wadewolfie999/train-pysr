@@ -8,10 +8,18 @@ PySR baseline stabilization or later backend comparison.
 
 ## Current Status
 
-Phase 0 - Repository Framing is explicitly accepted. This Phase 1 contract is
-provisional, unverified, and pending review. Documentation here does not by
-itself approve a dataset, feature, target, unit, label meaning, preprocessing
-rule, split rule, metric protocol, or class-imbalance strategy for modeling.
+The current project phase is `REBUILD`. Earlier phase-acceptance statements
+are historical and non-controlling. This data contract remains provisional,
+unverified, and pending A1 review. It does not by itself approve a dataset,
+feature, target, unit, label meaning, preprocessing rule, split rule, metric
+protocol, or class-imbalance strategy for modeling.
+
+## Scientific-Domain Boundary
+
+Source-domain pMSSM evidence does not establish target-domain IDM validity and
+does not assign scientific meaning, features, targets, or modeling approval to
+`Ht.csv`. Any cross-domain use requires an explicit, provenance-preserving
+A1-approved handoff.
 
 ## Dataset Registry
 

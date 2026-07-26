@@ -6,9 +6,14 @@ This protocol defines how outputs from Codex, scripts, notebooks, and model runs
 
 ## Review Authority
 
-The thesis author is the final scientific authority. Codex cannot approve its own output. ChatGPT may assist with reasoning and review but does not replace author approval.
+A1, Vahid Gorgin, is the sole internal authority for authorization, evidence
+acceptance, scientific verdict, phase transition, closure, and LOCK. A2 may
+assist with advisory scientific reasoning and review. A4 may implement bounded
+`train-pysr` work and perform technical validation under an exact A1-approved
+contract. Neither A2 nor A4 may approve or adjudicate its own output.
 
-Supervisor instructions and cited sources override AI-generated content.
+E1 guidance and cited sources must be captured faithfully, but E1 guidance gains
+internal project effect only through A1 interpretation or adoption.
 
 ## Review Classes
 
@@ -52,7 +57,9 @@ Reject or revise outputs that:
 
 ## Scientific-Claim Review
 
-Scientific claims require evidence and review before acceptance. Claims must be marked provisional, unverified, and pending review until accepted by the thesis author.
+Scientific claims require evidence and review before acceptance. Claims must be
+marked provisional, unverified, and pending review until explicitly accepted by
+A1. Technical validation does not constitute acceptance.
 
 ## Code/Config Review
 

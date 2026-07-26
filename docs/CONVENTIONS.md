@@ -48,13 +48,9 @@ Workstream II / Phase 1 - C++ Implementation - Operon
 
 ## Phase Status
 
-Workstream I / Phase 0 - Repository Framing is explicitly accepted.
-
-The current next phase is:
-
-```text
-Workstream I / Phase 1 - Data and Physics
-```
+The current project phase is `REBUILD`. Earlier workstream-phase status and
+acceptance records are historical and non-controlling unless A1 separately
+re-ratifies an exact provision.
 
 ## Report Naming
 

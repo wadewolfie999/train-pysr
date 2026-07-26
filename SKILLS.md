@@ -1,6 +1,11 @@
 # Repo Workflows
 
-These workflows are concise operational recipes for this repository. Untested workflows are provisional, unverified, and pending review.
+These workflows are concise operational recipes for this repository.
+
+REBUILD status: they describe technical capability only. They do not authorize
+execution, scientific evidence production, acceptance, verdict, closure,
+transition, or LOCK. A4 may use a workflow only under an exact A1-approved
+contract. Untested workflows are provisional, unverified, and pending review.
 
 ## `audit_dataset(dataset_id, run_config)`
 
@@ -97,7 +102,8 @@ Status: provisional, unverified, pending review.
 - Confirm ROC/AUC was computed from continuous scores, not hard labels.
 - Check dataset id, feature set, target, split rule, random seed, class-imbalance handling, metric implementation, output path, and code version.
 - Verify whether any AUC > 0.97 statement is written only as observed in the run and pending review.
-- Accept, reject, or supersede results only after thesis-author review.
+- Record an accept, reject, or supersede status only after an explicit A1
+  decision; this workflow cannot make that decision.
 
 ## `run_strong_baselines(dataset_id, run_config)`
 
@@ -142,7 +148,8 @@ Status: provisional, unverified, pending review.
 
 - Review whether engineered mass features improve approved-feature AUC.
 - Review whether diagnostic `Final_CLs` checks indicate possible leakage or an upper ceiling.
-- Decide whether the approved-feature ceiling justifies an expensive PySR search budget.
+- Prepare technical evidence for A1 to decide whether a PySR search budget is
+  authorized.
 
 ## `validate_auc_robustness(dataset_id, run_config)`
 
@@ -194,7 +201,8 @@ Status: provisional, unverified, pending review.
 Status: provisional, unverified, pending review.
 
 - Check scientific correctness, convention consistency, dataset registration consistency, target and feature definitions, metric protocol, class-imbalance handling, reproducibility metadata, citation support, and output preservation.
-- Mark results accepted, rejected, or requiring revision only after thesis-author review.
+- Record results as accepted, rejected, or requiring revision only after an
+  explicit A1 decision.
 
 ## Skill: commit
 
