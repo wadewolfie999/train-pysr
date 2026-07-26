@@ -1,16 +1,22 @@
 # Project Brief: IDM Symbolic-Regression Framework
 
+Status: **HISTORICAL PLANNING SOURCE — NON-CONTROLLING DURING REBUILD**
+
+This brief preserves pre-REBUILD framing. Statements below describing an
+immediate objective, accepted phase, or starting authority are historical and
+do not authorize current work unless A1 re-ratifies an exact provision.
+
 ## Objective
 
 This repository supports a thesis-oriented symbolic-regression framework for
 Inert Doublet Model (IDM) dataset analysis.
 
-The immediate objective is to move from a PySR-centered BSM exclusion workflow
+The pre-REBUILD objective was to move from a PySR-centered BSM exclusion workflow
 to a broader, reproducible IDM symbolic-regression research framework. PySR is
 the first backend to stabilize, not the identity of the project.
 
-Phase 0 - Repository Framing is explicitly accepted. The accepted framing is the
-starting authority for Workstream I / Phase 1 - Data and Physics.
+The historical record states that Phase 0 - Repository Framing was accepted.
+That record is preserved but is not current REBUILD authority.
 
 ## Motivation
 
@@ -74,13 +80,12 @@ configuration.
 
 ## Neural-Network Comparison
 
-A comparison with a neural-network workflow is expected later in the thesis
-workflow. This brief does not define final comparison metrics because the
-current repository authority docs do not yet provide reviewed final metrics for
-that comparison.
-
-TODO: define comparison metrics, baseline models, and reporting requirements
-after the dataset and physics conventions are reviewed.
+Khosravi, another master's student supervised by E1, forms the parallel
+Neural-Network comparison arm in E1's broader SR-versus-NN framework. Any future
+comparison must prospectively specify common datasets, splits, multiple metrics,
+uncertainty reporting, computational-budget treatment, and comparison criteria.
+No post-result metric selection, unknown-test-outcome optimization, or evidence
+transfer without a provenance-preserving handoff is authorized.
 
 ## Thesis Relevance
 
@@ -93,7 +98,8 @@ rejection reports, but it must not block Workstream I.
 
 ## Review Status
 
-This brief records Phase 0 - Repository Framing as explicitly accepted.
+This brief preserves the historical record that Phase 0 - Repository Framing
+was accepted; it does not re-ratify that status during REBUILD.
 Scientific claims, dataset conventions, physics interpretations, and model
 results remain provisional, unverified, and pending review.
 

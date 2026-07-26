@@ -2,7 +2,10 @@
 
 ## Scope
 
-This protocol applies to future Codex tasks in this repository. Codex is a repository-side implementation and reproducibility assistant, not the final scientific authority.
+This protocol applies to future A4/Codex tasks in `train-pysr`. The current
+project phase is `REBUILD`. A4 is the bounded repository-side implementation
+and technical-evidence actor, not A2 or the scientific authority. Every
+mutation or scientific execution requires an exact A1-approved contract.
 
 ## Required Pre-Task Reading
 
@@ -25,7 +28,9 @@ Run execution requires explicit instruction and reviewed configuration.
 
 ## Allowed Actions
 
-Codex may scaffold files, scripts, configs, tests, checks, and documentation. Codex may run non-destructive inspections, tests, linters, and validation checks when appropriate.
+Within an exact A1-approved contract, A4 may scaffold files, scripts, configs,
+tests, checks, and documentation and may perform bounded technical validation.
+Technical validation is not evidence acceptance or a scientific verdict.
 
 Codex may propose scientific or modeling ideas only as provisional, unverified, and pending review.
 

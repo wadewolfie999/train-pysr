@@ -7,9 +7,9 @@ symbolic-regression work.
 
 ## Status
 
-Phase 0 - Repository Framing is explicitly accepted. Dataset configs remain
-review-sensitive. A config file does not approve a dataset for modeling unless
-the data contract records the relevant approval state.
+The current project phase is `REBUILD`. Earlier phase-acceptance statements
+are historical and non-controlling. Dataset configs remain review-sensitive. A
+config file does not approve a dataset for modeling or scientific execution.
 
 ## Current Dataset Configs
 
