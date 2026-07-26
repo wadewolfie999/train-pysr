@@ -1,29 +1,36 @@
-# PySR Baseline Stabilization Plan
+# Historical PySR Baseline Stabilization Plan
 
-This file is a repository-local synchronization of the current A1-authorized
-technical direction. It does not independently approve scientific conclusions,
-physics interpretations, phase gates, or model results. Human review remains
-required.
+Status: **HISTORICAL — `DEPRECATED_HISTORICAL_SOURCE`**
 
-## Current Authorized Sequence
+This file preserves a pre-REBUILD technical plan and its recorded review state.
+It is not current authority, does not re-ratify any Scientific Act 1–9
+provision, and does not authorize fitting, metric production, search, evidence
+acceptance, phase transition, verdict, closure, or LOCK. Reuse requires an exact
+A1-approved REBUILD contract.
 
-1. Audit the current `train-pysr` repository, environment, configs, and local
-   PySR artifacts.
+## Historical Sequence
+
+The pre-REBUILD record described this sequence:
+
+1. Audit the `train-pysr` repository, environment, configs, and local PySR
+   artifacts.
 2. Discover and classify preprocessing and PySR execution switches without
    performing a scientific fit.
-3. Validate split-first, training-only preprocessing and operator-domain safety.
+3. Perform technical validation of split-first, training-only preprocessing and
+   operator-domain safety.
 4. Produce a human-editable baseline panel and complete configuration handoff.
-5. Record operator acceptance of the discovery evidence and proposed defaults.
+5. Record operator review of the discovery evidence and proposed defaults.
 6. Run one separately authorized fresh baseline fit.
 7. Recompute ROC-AUC and average precision independently from saved continuous
    test scores.
 8. Improve PySR through new, non-overwriting, one-dial-at-a-time runs.
 
-Steps 1 through 5 were accepted and integrated by the operator. This acceptance
-establishes technical readiness only: step 6 remains separately unauthorized,
-and the repository must still stop before any call to `PySRRegressor.fit`.
+The historical record states that steps 1 through 5 received technical review.
+That historical review is not current evidence acceptance or execution authority.
+No step in this sequence is active during REBUILD without a new exact A1
+contract.
 
-## Baseline Configuration Candidate
+## Historical Baseline Configuration Candidate
 
 - Dataset: `masses_exclusions`
 - Raw path: `data/raw/masses_exclusions.csv`
@@ -43,31 +50,29 @@ and the repository must still stop before any call to `PySRRegressor.fit`.
 - Warm start: disabled
 - Output: new run identity and non-overwriting run-local directories
 
-These defaults are accepted as the technical baseline configuration. This does
-not accept a scientific conclusion, physics interpretation, or model result.
+These values are preserved as a historical candidate, not as a current accepted
+baseline, scientific conclusion, physics interpretation, or model result.
 
-## Dial Discovery Requirements
+## Historical Dial-Discovery Requirements
 
-The registry and editable panel must cover raw, standard, robust,
+The recorded registry and editable panel covered raw, standard, robust,
 reference-scaled, log, mass-gap, and mass-ratio preprocessing; operators, loss,
 weights, selection, complexity, budget, precision, parallelism, determinism,
 warm start, threads, and output policy.
 
-Every option records availability and safety independently. Unsafe and deferred
-choices are blocked. Physics-review choices require an explicit acknowledgement.
-No unary operator is enabled by default.
+The record classified availability and safety independently, blocked unsafe and
+deferred choices, required acknowledgement for physics-review choices, and
+enabled no unary operator by default. These are historical technical statements,
+not current execution requirements.
 
-## Reproducibility and Integrity
+## Reproducibility and Preservation
 
-- Split rows before deriving or fitting any transformation.
-- Fit transformation statistics on training rows only and freeze them for test
-  rows.
-- Reject non-finite inputs and outputs.
-- Save exact transformation metadata, config identity, dataset identity, seed,
-  features, target, operators, loss, runtime settings, and output paths.
-- Never overwrite raw data, existing run artifacts, or previous run directories.
-- Independently validate saved labels and continuous scores after a future fit;
-  this validation is not a second fit.
+- Preserve the historical configs, reports, outputs, and provenance unchanged.
+- Do not promote historical technical validation into scientific acceptance.
+- Do not use historical results as current evidence without an explicit,
+  provenance-preserving A1 handoff.
+- Any future execution must use a new, non-overwriting run identity under an
+  exact A1-approved REBUILD contract.
 
 ## Review-Sensitive TODOs
 
@@ -75,7 +80,8 @@ No unary operator is enabled by default.
 - TODO: Confirm the physical meaning of `exclusion` values 0 and 1.
 - TODO: Review any physical interpretation of mass gaps, mass ratios, periodic
   functions, singular functions, or reference scales before enabling them.
-- TODO: Obtain separate A1 authorization before launching the fresh baseline fit.
+- TODO: Define a prospective, fair, multi-metric SR-versus-NN comparison before
+  inspecting comparison outcomes.
 
-All discovery results, defaults, future expressions, and future metrics remain
-provisional, unverified, and pending human review.
+All historical discovery results, defaults, expressions, and metrics remain
+non-controlling and pending any future A1 review or re-ratification.

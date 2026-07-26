@@ -7,9 +7,11 @@ symbolic-regression workflow. Raw datasets are preserved unchanged.
 
 ## Data Directory Status
 
-Phase 0 - Repository Framing is explicitly accepted. Phase 1 data policy is
-provisional, unverified, and pending review. Data documentation does not by
-itself approve a dataset for modeling.
+The current project phase is `REBUILD`. Earlier phase-acceptance statements
+are historical and non-controlling. This data policy is provisional, unverified,
+and pending A1 review. Data documentation does not by itself approve a dataset
+for modeling. Source-domain pMSSM evidence does not establish target-domain IDM
+or `Ht.csv` validity.
 
 ## Dataset Approval States
 

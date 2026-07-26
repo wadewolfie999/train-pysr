@@ -16,11 +16,12 @@ Each run config must declare:
 
 Run configs are provisional until executed, verified, and reviewed.
 
-The active PySR baseline uses a commented human-editable panel at
-`configs/runs/masses_exclusions_pysr_baseline_v1.yaml`. Allowed choices,
-classifications, defaults, and compatibility rules are declared separately in
-`configs/pysr/switch_registry.yaml`. Validate a panel with `--dry-run` before
-initializing Julia or starting a fit.
+No run config is active execution authority during `REBUILD`. The
+pre-REBUILD PySR baseline candidate is preserved at
+`configs/runs/masses_exclusions_pysr_baseline_v1.yaml`, with choices and
+compatibility rules in `configs/pysr/switch_registry.yaml`. A4 may use or
+technically validate a panel only under an exact A1-approved contract; technical
+validation is not scientific acceptance.
 
 For audit-only intake of a dataset with no reviewed target, `target_column` may
 be `null`. That does not assign a modeling target.
