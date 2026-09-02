@@ -16,5 +16,5 @@ REBUILD contract and human review.
 Legacy notebooks and their report data were preserved in the sibling archive:
 
 ```text
-../train-pysr-archive-20260902/source-tree/notebooks/
+SR-Workspace/train-pysr-archive-20260902/source-tree/notebooks/
 ```

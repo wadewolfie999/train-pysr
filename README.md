@@ -36,7 +36,7 @@ Historical notebooks, reports, logs, generated outputs, control-copy files,
 and inactive scripts are preserved in the sibling archive:
 
 ```text
-../train-pysr-archive-20260902/
+SR-Workspace/train-pysr-archive-20260902/
 ```
 
 The pre-REBUILD dataset registry records:
@@ -171,7 +171,7 @@ remains blocked unless an exact A1-approved contract authorizes it.
 Historical generated outputs are preserved in the sibling archive under:
 
 ```text
-../train-pysr-archive-20260902/source-tree/outputs/
+SR-Workspace/train-pysr-archive-20260902/source-tree/outputs/
 ```
 
 They are not raw data and should not be treated as accepted results unless
