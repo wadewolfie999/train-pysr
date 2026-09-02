@@ -1,10 +1,20 @@
 # Notebooks
 
-The notebooks and report-data files present before the REBUILD baseline are
-preserved historical review artifacts. Their embedded outputs, "current"
-wording, approved-feature labels, metrics, interpretations, and next steps are
-non-controlling and are not current SR-Res evidence.
+The active workflow has exactly three notebooks:
 
-Do not execute, overwrite, clear, or silently rewrite these notebooks. Any
-future reuse or evidence promotion requires an exact, provenance-preserving
-A1-approved contract.
+1. `01_pysr_run.ipynb` — guarded PySR fitting and run-artifact production.
+2. `02_auc_analysis.ipynb` — independent metrics from saved continuous scores.
+3. `03_supervisor_report.ipynb` — supervisor-facing presentation and summaries.
+
+The active notebooks resolve the repository root explicitly, so their paths do
+not depend on whether VS Code opened the repository root or this directory.
+
+`01_pysr_run.ipynb` defaults to a non-fitting dry-run. Any scientific fit,
+metric production, or evidence claim remains subject to an exact A1-approved
+REBUILD contract and human review.
+
+Legacy notebooks and their report data were preserved in the sibling archive:
+
+```text
+../train-pysr-archive-20260902/source-tree/notebooks/
+```

@@ -13,6 +13,22 @@ and pending A1 review. Data documentation does not by itself approve a dataset
 for modeling. Source-domain pMSSM evidence does not establish target-domain IDM
 or `Ht.csv` validity.
 
+## Notebook-First Active Workflow
+
+The active VS Code workflow uses three notebooks:
+
+1. `notebooks/01_pysr_run.ipynb` loads and validates `masses_exclusions`,
+   performs the guarded PySR run, and writes provenance plus continuous scores.
+2. `notebooks/02_auc_analysis.ipynb` reads saved scores and computes ROC-AUC,
+   average precision, ROC data, and separate threshold metrics.
+3. `notebooks/03_supervisor_report.ipynb` reads the saved run and analysis
+   artifacts for supervisor-facing presentation.
+
+The current immutable dataset location remains `data/raw/`. This preserves
+existing paths and historical provenance while keeping all repository datasets
+under the single top-level `data/` namespace. No raw file is moved or
+overwritten by the notebook workflow.
+
 ## Dataset Approval States
 
 | Dataset ID | Raw path | Status | Approval state | Notes |

@@ -1,0 +1,12 @@
+# Python runtime: 3.11.14
+# Versions installed and verified in the isolated repository .venv on 2026-09-02.
+jupyter==1.1.1
+jupyterlab==4.5.4
+ipykernel==7.2.0
+numpy==2.4.2
+pandas==3.0.0
+scikit-learn==1.8.0
+matplotlib==3.10.8
+PyYAML==6.0.3
+pysr==1.5.10
+juliacall==0.9.26

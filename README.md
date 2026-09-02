@@ -14,6 +14,31 @@ PySR remains the first symbolic-regression backend, not the project identity,
 but no fit, search, metric production, or model execution is currently
 authorized by the existence of that workflow.
 
+## Active Notebook Workflow
+
+The daily VS Code workflow is intentionally minimal:
+
+```text
+data/raw/*.csv
+    -> notebooks/01_pysr_run.ipynb
+    -> outputs/pysr/<run_id>/
+    -> notebooks/02_auc_analysis.ipynb
+    -> outputs/auc/<run_id>/
+    -> notebooks/03_supervisor_report.ipynb
+    -> outputs/report/
+```
+
+The three notebooks are the only active user-facing workflow. Supporting
+configs, documentation, and tests remain available; the VS Code Explorer shows
+all of them.
+
+Historical notebooks, reports, logs, generated outputs, control-copy files,
+and inactive scripts are preserved in the sibling archive:
+
+```text
+../train-pysr-archive-20260902/
+```
+
 The pre-REBUILD dataset registry records:
 
 ```text
@@ -136,43 +161,32 @@ any target, feature set, split rule, metric, or training task is assigned.
 
 ## Reproducibility
 
-Run definitions are organized through repository configs and scripts so that
-inputs, feature sets, target definitions, split rules, class-imbalance handling,
-metrics, and output paths can be reviewed and reproduced.
+Run definitions for the active path live in the PySR notebook and are saved in
+each run's metadata. Historical config/script workflows are preserved in the
+external archive and are not active execution authority during REBUILD.
 
-Historical reproducibility command examples, not current execution authority:
+Every fit, symbolic search, metric-production run, or notebook execution
+remains blocked unless an exact A1-approved contract authorizes it.
 
-```bash
-python scripts/audit_dataset.py --config configs/runs/masses_exclusions_audit.yaml
-python scripts/audit_dataset.py --config configs/runs/masses_exclusions2_audit.yaml
-python scripts/audit_dataset.py --config configs/runs/ht_audit.yaml
-python scripts/discover_pysr_dials.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --live-operator-check
-python scripts/train_pysr_auc_search.py --config configs/runs/masses_exclusions_pysr_baseline_v1.yaml --dry-run
-```
-
-These commands are documentation only during REBUILD. Every fit, symbolic
-search, metric-production run, or notebook execution remains blocked unless an
-exact A1-approved contract authorizes it.
-
-Ignored generated outputs may exist locally under:
+Historical generated outputs are preserved in the sibling archive under:
 
 ```text
-outputs/runs/
+../train-pysr-archive-20260902/source-tree/outputs/
 ```
 
-These generated outputs are not raw data and should not be treated as accepted
-results unless reviewed.
+They are not raw data and should not be treated as accepted results unless
+reviewed.
 
 ## Repository Layout
 
 ```text
-configs/     Dataset registry entries and run configurations.
-data/raw/    Raw datasets; these should remain unchanged.
-docs/        Workflow, conventions, review, and roadmap documentation.
-modules/     Module-level plans, questions, and research notes.
-notebooks/   Supervisor-facing and research-report notebooks.
-outputs/     Ignored generated outputs and run artifacts.
-scripts/     Audit, baseline, robustness, reproduction, and PySR scaffolding.
+.vscode/     Python/Jupyter workspace settings.
+configs/     Retained dataset and compatibility metadata.
+data/raw/    Raw datasets; these remain unchanged.
+docs/        Retained workflow, conventions, and review documentation.
+notebooks/   The three active notebooks.
+outputs/     Active run, analysis, and report artifacts.
+tests/       Focused technical validation.
 ```
 
 ## Key Cautions

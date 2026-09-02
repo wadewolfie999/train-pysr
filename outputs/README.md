@@ -1,6 +1,18 @@
 # Outputs
 
-Generated outputs go under `outputs/runs/<run_id>/`.
+Generated outputs go under the single `outputs/` namespace. The active
+notebook workflow uses:
+
+- `outputs/pysr/<run_id>/` for PySR run artifacts and continuous scores;
+- `outputs/auc/<run_id>/` for independent AUC analysis; and
+- `outputs/report/` for supervisor-facing exports when required.
+
+Historical `runs/` and `learning_runs/` trees were preserved outside the
+repository and are not part of the active notebook workflow:
+
+```text
+../train-pysr-archive-20260902/source-tree/outputs/
+```
 
 All outputs present before the REBUILD baseline are preserved historical
 artifacts. They are non-controlling, are not accepted evidence, and must not be
